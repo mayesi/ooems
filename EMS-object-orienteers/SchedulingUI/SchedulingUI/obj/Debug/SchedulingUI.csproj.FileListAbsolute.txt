@@ -1,0 +1,7 @@
+C:\Users\qball\OneDrive\Documents\SETY2S1\SQ\SchedulingUI\SchedulingUI\obj\Debug\SchedulingUI.csprojAssemblyReference.cache
+C:\Users\qball\OneDrive\Documents\SETY2S1\SQ\SchedulingUI\SchedulingUI\obj\Debug\SchedulingUI.csproj.CoreCompileInputs.cache
+C:\Users\qball\OneDrive\Documents\SETY2S1\SQ\SchedulingUI\SchedulingUI\bin\Debug\SchedulingUI.exe.config
+C:\Users\qball\OneDrive\Documents\SETY2S1\SQ\SchedulingUI\SchedulingUI\bin\Debug\SchedulingUI.exe
+C:\Users\qball\OneDrive\Documents\SETY2S1\SQ\SchedulingUI\SchedulingUI\bin\Debug\SchedulingUI.pdb
+C:\Users\qball\OneDrive\Documents\SETY2S1\SQ\SchedulingUI\SchedulingUI\obj\Debug\SchedulingUI.exe
+C:\Users\qball\OneDrive\Documents\SETY2S1\SQ\SchedulingUI\SchedulingUI\obj\Debug\SchedulingUI.pdb
