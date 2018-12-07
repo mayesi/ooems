@@ -17,7 +17,6 @@ namespace Demographics
     /// </remarks>
     public class DemographicsUI
     {
-
         /// <summary>
         /// Check if patient is already present in the database
         /// </summary>
@@ -69,7 +68,7 @@ namespace Demographics
         /// <param name="HCN"></param>
         public static void UpdatePatient(string HCN)
         {
-            
+
         }
 
         /// <summary>
@@ -82,7 +81,7 @@ namespace Demographics
         /// <param name="HCN"></param>
         public static string Search(string HCN)
         {
-            
+
             string searchResult = "";
             return searchResult;
         }
