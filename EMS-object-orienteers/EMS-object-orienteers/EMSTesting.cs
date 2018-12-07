@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EMS_object_orienteers
 {
-    class Program
+    class EMSTesting
     {
         static void Main(string[] args)
         {
