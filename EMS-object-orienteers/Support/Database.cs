@@ -72,7 +72,7 @@ namespace Support
                 }
             }
 
-            if(retVal == true)
+            if (retVal == true)
             {
                 Logging.LogMsg("Database", "StartDatabaseSystem", "Started Database System.");
             }
@@ -95,9 +95,9 @@ namespace Support
         static public bool CreateNewDatabase(String databaseName, int recordSize, String keyName)
         {
             string filepath = SupportConstants.DATABASE_FOLDER + "\\" + databaseName + ".txt";
-            
+
             // Check if the database already exists. If so, throw an exception.
-            if(File.Exists(filepath))
+            if (File.Exists(filepath))
             {
                 throw new ArgumentException("Database already exists.");
             }
@@ -115,7 +115,7 @@ namespace Support
             catch (Exception e)
             {
                 // There was an error. Delete the database if it exists at this point.
-                if(File.Exists(filepath))
+                if (File.Exists(filepath))
                 {
                     File.Delete(filepath);
                     string details = "Deleted database " + databaseName + "because of: " + e.Message;
@@ -248,12 +248,12 @@ namespace Support
         public String GetRecord(String searchTerm)
         {
             string record = "";
-            if(needRefresh)
+            if (needRefresh)
             {
                 GetDatabase();
                 needRefresh = false;
             }
-            if(database.ContainsKey(searchTerm))
+            if (database.ContainsKey(searchTerm))
             {
                 record = database[searchTerm];
             }
@@ -276,7 +276,7 @@ namespace Support
             string[] splitRecord = record.Split(SupportConstants.FIELD_DELIM);
             return splitRecord[0];
         }
-        
+
 
         /// <summary>
         /// Add a new record to the database.
@@ -303,7 +303,8 @@ namespace Support
 
             // Get the primary key value from newRecord and check if it is already in the database
             string[] splitRecord = newRecord.Split(SupportConstants.FIELD_DELIM);
-            if (database.ContainsKey(splitRecord[0])) {
+            if (database.ContainsKey(splitRecord[0]))
+            {
                 string details = "User supplied record with a primary key value that already exists in the database " + filename;
                 Logging.LogMsg("Database", "AddRecord", details);
                 throw new Exception("Error: the primary key value already exists in the database.");
@@ -343,7 +344,7 @@ namespace Support
         {
             bool retVal = false;
             // ADD A CHECK FOR IF THE SEARCH TERM IS IN AN EXISTING RECORD
-            if(needRefresh)
+            if (needRefresh)
             {
                 GetDatabase();
                 needRefresh = false;
@@ -355,7 +356,7 @@ namespace Support
             string newKey = ParseRecord(newRecord);
             if (searchTerm != newKey)
             {
-                if(database.ContainsKey(newKey))
+                if (database.ContainsKey(newKey))
                 {
                     string details = "update aborted - duplicate primary key value in new record";
                     Logging.LogMsg("Database", "UpdateRecord", details);
@@ -372,8 +373,8 @@ namespace Support
             else
             {
                 string oldRecord = database[searchTerm];
-                
-                if(UpdateDatabaseFile(oldRecord, newRecord))
+
+                if (UpdateDatabaseFile(oldRecord, newRecord))
                 {
                     database[searchTerm] = newRecord;
                     string details = "Updated record in " + filename;
@@ -415,7 +416,7 @@ namespace Support
                 retVal = true;
                 needRefresh = false;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 string details = "Failed to load database " + filename + ". With error: " + e.Message;
                 Logging.LogMsg("Database", "GetDatabase", details);
@@ -434,10 +435,10 @@ namespace Support
             bool found = false;
             int i = 0;
 
-            while(!found && i < all.Length)
+            while (!found && i < all.Length)
             {
                 line = all[i].Split(SupportConstants.FIELD_DELIM);
-                if(line[0] == dbName)
+                if (line[0] == dbName)
                 {
                     found = true;
                 }
@@ -446,7 +447,7 @@ namespace Support
                     i = i + 1;
                 }
             }
-            if(found == false)
+            if (found == false)
             {
                 line = null;
             }
