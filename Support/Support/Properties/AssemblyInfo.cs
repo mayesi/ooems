@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ScheduleUI")]
+[assembly: AssemblyTitle("Support")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ScheduleUI")]
+[assembly: AssemblyProduct("Support")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c0088e70-29a5-4f3f-b2b2-ebe3bd7b03fd")]
+[assembly: Guid("aebdbddb-50b2-44e9-91cd-450ab4c0297d")]
 
 // Version information for an assembly consists of the following four values:
 //

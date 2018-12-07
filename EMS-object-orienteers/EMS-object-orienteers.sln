@@ -5,13 +5,11 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMS-object-orienteers", "EMS-object-orienteers\EMS-object-orienteers.csproj", "{9E5F6D20-0F47-4C98-888E-F10B09C19620}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulingUI", "ScheduleUI\SchedulingUI.csproj", "{C0088E70-29A5-4F3F-B2B2-EBE3BD7B03FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Support", "..\Support\Support\Support.csproj", "{AEBDBDDB-50B2-44E9-91CD-450AB4C0297D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demographics", "Demographics\Demographics.csproj", "{90F7B8BD-2798-488C-9A78-B0170420A7A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demographics", "..\Demographics\Demographics.csproj", "{90F7B8BD-2798-488C-9A78-B0170420A7A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ems_billing", "ems_billing\ems_billing.csproj", "{C68B8F5B-67D8-45D8-B81C-F25F9D4D5A31}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Support", "Support\Support.csproj", "{734B4FBD-48EA-44FE-9E0F-48AC9FAAF696}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ems_billing", "..\ems_billing\ems_billing.csproj", "{C68B8F5B-67D8-45D8-B81C-F25F9D4D5A31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,10 @@ Global
 		{9E5F6D20-0F47-4C98-888E-F10B09C19620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E5F6D20-0F47-4C98-888E-F10B09C19620}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E5F6D20-0F47-4C98-888E-F10B09C19620}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0088E70-29A5-4F3F-B2B2-EBE3BD7B03FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0088E70-29A5-4F3F-B2B2-EBE3BD7B03FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0088E70-29A5-4F3F-B2B2-EBE3BD7B03FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0088E70-29A5-4F3F-B2B2-EBE3BD7B03FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEBDBDDB-50B2-44E9-91CD-450AB4C0297D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEBDBDDB-50B2-44E9-91CD-450AB4C0297D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEBDBDDB-50B2-44E9-91CD-450AB4C0297D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEBDBDDB-50B2-44E9-91CD-450AB4C0297D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{90F7B8BD-2798-488C-9A78-B0170420A7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{90F7B8BD-2798-488C-9A78-B0170420A7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90F7B8BD-2798-488C-9A78-B0170420A7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,10 +33,6 @@ Global
 		{C68B8F5B-67D8-45D8-B81C-F25F9D4D5A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C68B8F5B-67D8-45D8-B81C-F25F9D4D5A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C68B8F5B-67D8-45D8-B81C-F25F9D4D5A31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{734B4FBD-48EA-44FE-9E0F-48AC9FAAF696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{734B4FBD-48EA-44FE-9E0F-48AC9FAAF696}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{734B4FBD-48EA-44FE-9E0F-48AC9FAAF696}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{734B4FBD-48EA-44FE-9E0F-48AC9FAAF696}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

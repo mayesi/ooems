@@ -73,9 +73,9 @@ namespace Support
             string[] array = File.ReadAllLines(filepath);
             string retStr = "";
 
-            foreach (string line in array)
+            foreach(string line in array)
             {
-                if (searchTerm == line.Substring(0, numBytes))
+                if (searchTerm == line.Substring(0,numBytes))
                 {
                     retStr = line;
                     break;

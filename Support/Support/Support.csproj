@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C0088E70-29A5-4F3F-B2B2-EBE3BD7B03FD}</ProjectGuid>
+    <ProjectGuid>{AEBDBDDB-50B2-44E9-91CD-450AB4C0297D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ScheduleUI</RootNamespace>
-    <AssemblyName>ScheduleUI</AssemblyName>
+    <RootNamespace>Support</RootNamespace>
+    <AssemblyName>Support</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,16 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Day.cs" />
-    <Compile Include="Menu.cs" />
-    <Compile Include="Month-DESKTOP-1V6H89P.cs" />
-    <Compile Include="Month.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="FileSupport.cs" />
+    <Compile Include="Logging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Schedule.cs" />
-    <Compile Include="Week-DESKTOP-1V6H89P-2.cs" />
-    <Compile Include="Week-DESKTOP-1V6H89P.cs" />
-    <Compile Include="Week.cs" />
+    <Compile Include="SupportConstants.cs" />
+    <Compile Include="TestHarness.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
