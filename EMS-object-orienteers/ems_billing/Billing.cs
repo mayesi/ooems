@@ -16,7 +16,7 @@ namespace billing
     /// Database classes. Exceptions are thrown for file IO, database, and parameter
     /// errors.
     /// </summary>
-    class Billing
+    public class Billing
     {
         // Private Data Members
         
@@ -49,8 +49,24 @@ namespace billing
 
             string fullstring = "";
 
+            try
+            {
+                fullstring = FileSupport.FindLineByBytes("BillingFiles/masterbilling.txt", Code, 4);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                DirectoryInfo di = Directory.CreateDirectory("BillingFiles/");
+                Console.WriteLine("Directory Structure for the Master Billing Code File Does Not Exist");
+            }
+            catch (FileNotFoundException)
+            {
+                
+            }
+            catch
+            {
 
-            fullstring = FileSupport.FindLineByBytes("BillingFiles/masterbilling.txt", Code, 4);
+            }
+
 
             if (fullstring == "")
             {
@@ -276,17 +292,48 @@ namespace billing
                 // display the summary
                 catch (FileNotFoundException)
                 {
-                    myreport = FileSupport.ReadAllLines("BillingFiles/MonthlyResponse/" + filename);
+                    try
+                    {
+                        myreport = FileSupport.ReadAllLines("BillingFiles/MonthlyResponse/" + filename);
 
-                    BillingSummary.CalculateResponse(myreport, filename);
+                        BillingSummary.CalculateResponse(myreport, filename);
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        Console.WriteLine("No response file found.\n");
+                        return false;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
                 }
             }
             // Basically does the same thing again as above
             catch (FileNotFoundException)
             {
-                myreport = FileSupport.ReadAllLines("BillingFiles/MonthlyResponse/" + filename);
+                try
+                {
+                    myreport = FileSupport.ReadAllLines("BillingFiles/MonthlyResponse/" + filename);
 
-                BillingSummary.CalculateResponse(myreport, filename);
+                    BillingSummary.CalculateResponse(myreport, filename);
+                }
+                catch
+                {
+                    Console.WriteLine("No response file found.\n");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
             //this function always returns true.
             return true;
@@ -307,7 +354,7 @@ namespace billing
         ///<summary>
         /// Default constructor for the billing class
         ///</summary>
-        Billing()
+        public Billing()
         {
             Month = "";
             DateOfAppointment = "";
@@ -328,7 +375,7 @@ namespace billing
         /// <param name="BGender">Gender of the patient</param>
         /// <param name="BC">Billing Code</param>
         /// <param name="BFee">Billed Fee</param>
-        Billing(string BMonth, string DoA, string HCN, char BGender, string BC, string BFee)
+        public Billing(string BMonth, string DoA, string HCN, char BGender, string BC, string BFee)
         {
             Month = BMonth;
             DateOfAppointment = DoA;
