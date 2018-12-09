@@ -15,9 +15,34 @@ namespace SchedulingUI
         public const int cMonthTopMax = 4;
         public const int cMonthBotMax = 12;
         public const int cMonthBuffer = 29;
+        public static string[] cMonths = { "October", "November", "December" };
+
+        private static string curMonth;
+        public static string CurMonth
+        {
+            get
+            {
+                return curMonth;
+            }
+            set
+            {
+                curMonth = value;
+            }
+        }
+        private static int monthSelect;
+        public static int MonthSelect
+        {
+            get
+            {
+                return monthSelect;
+            }
+            set
+            {
+               monthSelect = value;
+            }
+        }
 
 
-        public const int cMonthLength = 30; //temp for testing
         ///
         /// \Called to display monthly user interface
         /// \details <b>showMonth</b>
@@ -32,19 +57,26 @@ namespace SchedulingUI
         public static void showMonth()
         {
             Console.Clear();
-            int startDay = 1;
-            int date = 1;
-            int pos;
-            Console.WriteLine("\tESM Schedule November 2018\n");//will be made dynamic later
-            Console.WriteLine("Sun\tMon\tTues\tWed\tThus\tFri\tSun\n");
 
-            for (pos = 1; pos <= startDay; ++pos)
+            int date = 1;
+            CurMonth = cMonths[MonthSelect];
+            int startDate = getStartDate();
+            int monthLength = getMonthLength();
+
+            int pos;
+            Console.WriteLine("\tESM Schedule " + CurMonth + " 2018\n");//will be made dynamic later
+            Console.WriteLine("Sun\tMon\tTues\tWed\tThus\tFri\tSun\n");
+            //CurMonth = "october";
+            for (
+                
+                
+                pos = 1; pos <= startDate; ++pos)
             {
                 Console.Write("\t");
 
             }
 
-            while (date <= cMonthLength)
+            while (date <= monthLength)
             {
 
                 if (pos % 7 == 0)
@@ -58,7 +90,7 @@ namespace SchedulingUI
                 ++pos;
                 ++date;
             }
-            Day.showDay(selectDate(startDay));
+            Day.showDay(selectDate(startDate));
         }
 
         ///
@@ -72,7 +104,7 @@ namespace SchedulingUI
         public static int selectDate(int start)
         {
             int yPos = cMonthTopMax;
-            int yMonthEnd = (cMonthHorz) * (start + cMonthLength - cMonthBuffer); //needs to be made dynamic based on the month
+            int yMonthEnd = (cMonthHorz) * (start + getMonthLength() - cMonthBuffer); //needs to be made dynamic based on the month
             int xPos = cMonthHorz * (start);
             Console.SetCursorPosition(xPos, yPos);
             ConsoleKeyInfo input;
@@ -113,11 +145,21 @@ namespace SchedulingUI
                 }
                 else if (input.Key == ConsoleKey.D)
                 {
-                    Day.showDay(1);
+                    Day.showDay(getDate(xPos, yPos, start, null));
                 }
                 else if (input.Key == ConsoleKey.W)
                 {
                     Week.showWeek();
+                }
+                else if (input.Key == ConsoleKey.E && MonthSelect < 2)
+                {
+                    MonthSelect++;
+                    showMonth();
+                }
+                else if (input.Key == ConsoleKey.Q && MonthSelect > 0)
+                {
+                    MonthSelect--;
+                    showMonth();
                 }
                 Console.SetCursorPosition(xPos, yPos);
             }
@@ -126,9 +168,42 @@ namespace SchedulingUI
             return getDate(xPos, yPos, start, null);
         }
 
+        public static int getStartDate()
+        {
+            int startDate = 0;
+            if (CurMonth == "October")
+            {
+                startDate = 1;
+            }
+            else if (CurMonth == "November")
+            {
+                startDate = 4;
+            }
+            else if (CurMonth == "December")
+            {
+                startDate = 6;
+            }
+            return startDate;
+        }
 
 
-
+        public static int getMonthLength()
+        {
+            int monthLength = 0;
+            if (CurMonth == "October")
+            {
+                monthLength = 31;
+            }
+            else if (CurMonth == "November")
+            {
+                monthLength = 30;
+            }
+            else if (CurMonth == "December")
+            {
+                monthLength = 31;
+            }
+            return monthLength;
+        }
 
         ///
         /// \Called to determine the date selected

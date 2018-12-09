@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 /// 
 /// \class Menu
 ///
@@ -15,8 +12,19 @@ using System.Threading.Tasks;
 ///
 namespace SchedulingUI
 {
-    public class Menu
+    class Menu
     {
+        public const int cVert = 6;
+        public const int cHorz = 16;
+        public const int cTopMax = 4;
+        public const int cBotMax = 20;
+        public const int cLeftMax = 3;
+        public const int cRightMax = 40;
+
+        public static string[] cAllMonths = { "January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+
+
+
         ///
         /// \Called to display the main menu of the user interface
         /// \details <b>Main Menu</b>
@@ -26,8 +34,9 @@ namespace SchedulingUI
         /// 
         /// \return   Returns int: return value from the select method
         ///
-        public string mainMenu()
+        public static string mainMenu()
         {
+            Console.Clear();
             Console.WriteLine("Welcome to the hospital - Main Menu");
             Console.WriteLine("---------------------------------");
             Console.WriteLine("1: Create new patient visit");
@@ -74,18 +83,121 @@ namespace SchedulingUI
         /// 
         /// \return  Returns int: return value from the select method
         ///
-        public string billingMenu()
-        { 
-            Console.WriteLine("Welcome to the hospital - Billing Menu");
-            Console.WriteLine("---------------------------------");
-            Console.WriteLine("1: Generate monthly billing");
-            Console.WriteLine("2: Reconsile monthly billing");
-            Console.WriteLine("3: View monthly report");
-            Console.WriteLine("4: Exit");
+        public static void BillingMenu()
+        {
+            int monthCount = 0;
+            for (int j = 0; j <= 3; ++j)
+            {
+                for (int i = 0; i <= 2; ++i)
+                {
+                    Console.SetCursorPosition(16 * i, j * 6);
+                    if (j == 0)
+                    {
+                        Console.Write("________________");
+                    }
+                    else
+                    {
+                        Console.Write("|_______________|");
+                    }
+                    Console.SetCursorPosition(cHorz * i, cVert * j + 1);
+                    Console.Write("|\t \t|");
+                    Console.SetCursorPosition(cHorz * i, cVert * j + 2);
+                    Console.Write("|\t\t|");
+                    Console.SetCursorPosition(cHorz * i, cVert * j + 3);
+                    Console.Write("|   "+cAllMonths[monthCount] +" \t|  ");
+                    Console.SetCursorPosition(cHorz * i, cVert * j + 4);
+                    Console.Write("|\t \t|");
+                    Console.SetCursorPosition(cHorz * i, cVert * j + 5);
+                    Console.Write("|\t\t|");
+                    Console.SetCursorPosition(cHorz * i, cVert * j + 6);
+                    Console.Write("|_______________|\n");
+                    monthCount++;
+                }
+            }
 
-            return select();
+
+
+
+            selectMonth();
         }
 
+        ///
+        /// \Called to select the slot for an appointment 
+        /// \details <b>selctAppointment</b>
+        /// 
+        ///  This method will allow the user to select which time slot the 
+        ///  patient wishes to book their appointment
+        /// 
+        /// \return void 
+        ///
+        static public void selectMonth()
+        {
+            int yPos = 3;
+            int xPos = 4;
+            int selection = 0;
+            Console.SetCursorPosition(xPos, yPos);
+            
+            ConsoleKeyInfo input;
+
+
+            do
+            {
+                getTimeSlot(xPos, yPos, selection, "red");
+                input = Console.ReadKey(true);
+                getTimeSlot(xPos, yPos, selection, "green");
+                if (input.Key == ConsoleKey.UpArrow && yPos > cTopMax)
+                {
+                    yPos = yPos - cVert;
+                    selection -= 3;
+                }
+                else if (input.Key == ConsoleKey.DownArrow && yPos <= cBotMax)
+                {
+                    yPos = yPos + cVert;
+                    selection += 3;
+                }
+                else if (input.Key == ConsoleKey.RightArrow && xPos > cRightMax)
+                {
+                    xPos = xPos + cHorz;
+                    ++selection;
+                }
+                else if (input.Key == ConsoleKey.LeftArrow && xPos <= cLeftMax)
+                {
+                    xPos = xPos - cHorz;
+                    --selection;
+                }
+                else if (input.Key == ConsoleKey.D)
+                {
+                    Day.showDay(1);
+                }
+                else if (input.Key == ConsoleKey.M)
+                {
+                    Month.showMonth();
+                }
+
+                Console.SetCursorPosition(xPos, yPos);
+            }
+            while (input.Key != ConsoleKey.Enter);
+            Console.ReadLine();
+            //Billing.ViewReport(selection, 2018);
+            // .ViewReport(selection, 2018);
+        }
+
+        static public int getTimeSlot(int xPos, int yPos, int selection, string colour)
+        {
+
+            Console.SetCursorPosition(xPos, yPos);
+            if (colour == "red")
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+            else if (colour == "green")
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+            Console.WriteLine(cAllMonths[selection]);
+
+            return 0;
+        }
 
         ///
         /// \Called to get user input

@@ -54,5 +54,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ems_billing\ems_billing.csproj">
+      <Project>{c68b8f5b-67d8-45d8-b81c-f25f9d4d5a31}</Project>
+      <Name>ems_billing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Support\Support.csproj">
+      <Project>{734b4fbd-48ea-44fe-9e0f-48ac9faaf696}</Project>
+      <Name>Support</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Support;
 /// 
 /// \class Schedule
 ///
@@ -14,26 +12,22 @@ using System.Threading.Tasks;
 ///
 namespace SchedulingUI
 {
-    public class Schedule 
+    class Schedule 
     {
-        public const string days = "1";
-        public const string week = "2";
-        public const string month = "3";
-
         public const int cMonthvert = 2;
         public const int cMonthHorz = 8;
         public const int cMonthLeftMax = 8;
         public const int cMonthRightMax = 40;
         public const int cMonthTopMax = 4;
         public const int cMonthBotMax = 10;
-
-
+        public static int HCH = 1;
         Dictionary<int, object> scheduleInfo = new Dictionary<int, object>();
+        Database db = new Database("October Database");
+
 
         enum scale {days = 1, week, month};
-        
-       
         enum monthLenghts { october = 31, november = 30, december = 31}
+
         private int day;
         public int iDay
         {
@@ -50,6 +44,13 @@ namespace SchedulingUI
         public Schedule()
         {
             Console.CursorVisible = false;
+            if (Database.StartDatabaseSystem() == false)
+            { 
+                Database.CreateNewDatabase("October Database", 10000, "Health Card Number");
+                Database.CreateNewDatabase("November Database", 10000, "Health Card Number");
+                Database.CreateNewDatabase("December Database", 10000, "Health Card Number");
+            }
+            
         }
 
 
@@ -63,7 +64,7 @@ namespace SchedulingUI
         /// 
         /// \return  Returns void
         ///
-        public void format()
+        public static void ScheduleMenu()
         {
 
             Console.WriteLine("Welcome to the schedule");
@@ -71,9 +72,9 @@ namespace SchedulingUI
             Console.WriteLine("D: View by day");
             Console.WriteLine("W: View by week");
             Console.WriteLine("M: view by month");
+            Console.WriteLine("H: Search by Health Card Number");
+            Console.WriteLine("L: Search by last name");
 
-
-     
             ConsoleKeyInfo input;
 
             do
@@ -92,27 +93,45 @@ namespace SchedulingUI
                 {
                     Month.showMonth();
                 }
+                else if (input.Key == ConsoleKey.H)
+                {
+                    SearchSchedule("HCN");
+                }
+                else if (input.Key == ConsoleKey.L)
+                {
+                    SearchSchedule("Name");
+                }
             } while (input.Key != ConsoleKey.Enter);
-            //    case days:
-            //        Day.showDay(1);
-            //        break;
-            //    case week:
-            //        Week.showWeek();
-            //        break;
-            //    case month:
-            //        Month.showMonth();
-            //        break;              
-            //    default:
-            //        Console.Write("Please select day, week, month");
-            //        break;
-            //}
+    
         }
 
-        
 
 
 
-       
+        ///
+        /// \Called to switch views of the schedule
+        /// \details <b>period</b>
+        ///
+        ///  This method will get input from the user to select whether they wish
+        ///  to view the schedule by day, week or month
+        /// 
+        /// \return  Returns void
+        ///
+        public static void SearchSchedule(string searchType)
+        {
+            if (searchType == "HCN")
+            {
+                Console.Write("Enter the Health Card Number to search for: ");
+            }
+            else if (searchType == "name")
+            {
+                Console.Write("Enter the last name to search for: ");
+            }
+            Console.ReadLine();
+            
+
+        }
+
 
 
         ///
@@ -127,7 +146,9 @@ namespace SchedulingUI
         ///
         public void patientSearch(string sHCN)
         {
-            
+            Database db = new Database(Month.CurMonth + " Database");
+            db.GetRecord("140");
+
 
         }
 
@@ -141,11 +162,22 @@ namespace SchedulingUI
         /// 
         /// \return void 
         ///
-        public void bookAppointment()
+        public static void bookAppointment(int day, int appointment)
         {
-            
-         
-
+            Database db = new Database(Month.CurMonth + " Database");
+            try
+            {
+                db.AddRecord(day.ToString() + appointment.ToString() + "|" + HCH + "|" + Month.CurMonth + "|Sean|Obrien");
+            }
+            catch(Exception ex)
+            {
+                Console.Clear();
+                Console.WriteLine("Time slot already selected");
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey();
+                Month.showMonth();
+            }
+            HCH++;
         }
 
         
