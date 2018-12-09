@@ -20,8 +20,6 @@ namespace Demographics
         private const int MIN_X_VALUE = 22;
         private const int MIN_Y_VALUE = 2;
 
-
-
         /// <summary>
         /// Check if patient is already present in the database
         /// </summary>
@@ -33,14 +31,21 @@ namespace Demographics
         /// <returns>true: Present in database, false: Not present</returns>
         public static bool CheckIfPresent(string HCN)
         {
-            if (Database.CreateNewDatabase("Patients", 1000, "HCN"))
+            try
             {
+                Database.CreateNewDatabase("Patients", 1000, "HCN");
+            }
+            catch (ArgumentException)
+            { 
                 //! Send HCN to search function in database
                 if (Search(HCN) != "")
                 {
                     return true;
                 }
             }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }     
             return false;
         }
 
@@ -54,6 +59,8 @@ namespace Demographics
         /// <returns>true: successful, false: unsuccessful</returns>
         public static bool PromptForInfo(string HCN)
         {
+            Console.Clear();
+            Console.CursorVisible = true;
             Patient patient = new Patient();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Please enter patient information");
@@ -75,14 +82,16 @@ namespace Demographics
             if (CheckIfPresent(HCN))
             {
                 //! Prefill patient information
+                int numFields = 0;
                 string[] patientString = Search(HCN).Split('|');
                 int y = 2;
-
+                numFields = patientString.Length;
                 //! Fill each line with the corresponding information
-                for (int i = 0 ; y <= 14; i++)
+                for (int i = 0 ; i <= 11; i++)
                 {
                     Console.SetCursorPosition(MIN_X_VALUE, y);
                     Console.WriteLine(patientString[i]);
+                    ++y;
                 }
             }
 
@@ -115,7 +124,6 @@ namespace Demographics
                 {
                     break;
                 }
-
                 value = Console.ReadLine();
 
                 if (!CheckLine(patient, yPos, value))
@@ -132,6 +140,17 @@ namespace Demographics
             return false;
         }
 
+        /// <summary>
+        /// Check if current input line is valid
+        /// </summary>
+        /// <remarks>
+        /// This function will check which value the line that is highlighted is referring to.
+        /// It will then validate the value that is there
+        /// </remarks>
+        /// <param name="patient"></param>
+        /// <param name="yPos"></param>
+        /// <param name="value"></param>
+        /// <returns>true: successful, false: unsuccessful</returns>
         public static bool CheckLine(Patient patient, int yPos, string value)
         {
             bool result = false;
@@ -189,7 +208,10 @@ namespace Demographics
         {
             if (CheckIfPresent(HCN))
             {
-                Search(HCN);
+                if(Search(HCN) != "")
+                {
+                    
+                }
             }
             //! Receive patient information back
             //! Show patient information and allow edits
@@ -212,6 +234,15 @@ namespace Demographics
             return searchResult;
         }
 
+        /// <summary>
+        /// Add a patient to the database
+        /// </summary>
+        /// <remarks>
+        /// This function will split the patient into a string and send that to be
+        /// saved by the database
+        /// </remarks>
+        /// <param name="patient"></param>
+        /// <returns>true: successful, false: unsuccessful</returns>
         public bool AddPatient(Patient patient)
         {
             Database db = new Database("Patients");

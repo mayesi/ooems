@@ -19,11 +19,6 @@ namespace Demographics
     /// </remarks>
     public class Patient
     {
-        static int Main()
-        {
-            DemographicsUI.PromptForInfo("234342344i4j");
-            return 0;
-        }
         /// <summary>
         /// Private data members to hold patient information
         /// </summary>
@@ -84,7 +79,7 @@ namespace Demographics
                     }
                     break;
                 case "AddressLine 1":
-                    Regex AddressRegex = new Regex(@"^\d*\s[a-zA-z]*\s[a-zA-z.]*$");
+                    Regex AddressRegex = new Regex(@"^\d*\s[a-zA-z ]*\s[a-zA-z.]*$");
                     if (AddressRegex.IsMatch(input))
                     {
                         if (field.Equals("AddressLine1"))
@@ -92,7 +87,7 @@ namespace Demographics
                             this.AddressLine1 = input;
                             result = true;
                         }
-                        else if (field.Equals("AddressLin2"))
+                        else if (field.Equals("AddressLine2"))
                         {
                             this.AddressLine2 = input;
                             result = true;
@@ -153,6 +148,15 @@ namespace Demographics
 
             return result;
         }
+
+        /// <summary>
+        /// Set function for AddressLine2
+        /// </summary>
+        /// <remarks>
+        /// Sets the value for AddressLine2
+        /// </remarks>
+        /// <param name="addressLine2"></param>
+        /// <returns>true: successful, false: unsuccessful</returns>
         public bool SetAddressLine2(string addressLine2)
         {
             this.AddressLine2 = addressLine2;

@@ -62,10 +62,6 @@
       <Project>{c68b8f5b-67d8-45d8-b81c-f25f9d4d5a31}</Project>
       <Name>ems_billing</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SchedulingUI\SchedulingUI\SchedulingUI.csproj">
-      <Project>{a909f4f4-b53d-426a-abcf-e453fbb73c8c}</Project>
-      <Name>SchedulingUI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Support\Support.csproj">
       <Project>{734b4fbd-48ea-44fe-9e0f-48ac9faaf696}</Project>
       <Name>Support</Name>
