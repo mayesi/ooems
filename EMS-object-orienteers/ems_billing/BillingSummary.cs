@@ -15,7 +15,7 @@ namespace billing
     /// information stored in a database in the EMS. Exceptions are thrown for database,
     /// file, and parameter errors.
     /// </summary>
-    class BillingSummary
+    public class BillingSummary
     {
         //These are the values we are required to keep track of. 
         private int EncountersBilled { get; set; }          /// sum of encounters that month
