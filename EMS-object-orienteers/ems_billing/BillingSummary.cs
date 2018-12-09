@@ -50,10 +50,8 @@ namespace billing
             {
                 FileSupport.WriteLine(@"c:/ooems/BillingFiles/MonthlySummaries/" + month, element);
             }
-            //grab the file as an array of string
-            string[] summary = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlySummaries/" + month);
             //display it
-            DisplayBillingSummary(summary);
+            DisplayBillingSummary(Summary);
         }
 
 
