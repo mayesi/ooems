@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 ///
 namespace SchedulingUI
 {
-    class Menu
+    public class Menu
     {
         ///
         /// \Called to display the main menu of the user interface

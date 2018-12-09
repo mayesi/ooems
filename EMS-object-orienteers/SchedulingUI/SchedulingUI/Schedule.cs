@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 ///
 namespace SchedulingUI
 {
-    class Schedule 
+    public class Schedule 
     {
         public const string days = "1";
         public const string week = "2";
