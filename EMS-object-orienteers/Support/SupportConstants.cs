@@ -11,10 +11,10 @@ namespace Support
     /// </summary>
     public class SupportConstants
     {
-        public const String DATABASE_FOLDER = "Databases";      /// The folder holding the databases
-        public const String DATABASE_LIST = "DatabaseList.txt"; /// The list of databases
+        public const String DATABASE_FOLDER = @"C:/ooems/Databases";      /// The folder holding the databases
+        public const String DATABASE_LIST = @"C:/ooems/DatabaseList.txt"; /// The list of databases
         public const char FIELD_DELIM = '|';                    /// The field delimiter for records
-        public const String LOG_FILE_PATH = "ems_log.txt";      /// The default file for logs
+        public const String LOG_FILE_PATH = @"C:/ooems/ems_log.txt";      /// The default file for logs
       
     }
 }

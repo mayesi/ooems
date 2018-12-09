@@ -426,7 +426,13 @@ namespace Support
             return retVal;
         }
 
-        // if line == null, list
+        /// <summary>
+        /// This method will look in the DatabaseList.txt file for the database
+        /// parameters.
+        /// </summary>
+        /// <param name="dbName">string - the database name</param>
+        /// <returns>string array - the info in an array or an empty string if the
+        /// database does not exist. </returns>
         protected string[] GetDatabaseInfo(string dbName)
         {
             string filepath = SupportConstants.DATABASE_LIST;
