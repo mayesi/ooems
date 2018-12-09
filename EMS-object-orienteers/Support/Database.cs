@@ -513,11 +513,11 @@ namespace Support
             foreach (KeyValuePair<string,string> pair in database)
             {
                 string[] splitRecord = pair.Value.Split(SupportConstants.FIELD_DELIM);
-                if(splitRecord.Length >= fieldNumber || fieldNumber < 0)
+                if(fieldNumber >= splitRecord.Length || fieldNumber < 0)
                 {
                     throw new ArgumentOutOfRangeException("The field number is not a valid number for this database.");
                 }
-                if (splitRecord[fieldNumber] == searchTerm)
+                if (searchTerm.Equals(splitRecord[fieldNumber], StringComparison.OrdinalIgnoreCase ))
                 {
                     matches.Add(pair.Value);
                 }
