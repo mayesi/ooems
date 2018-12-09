@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Support;
 
 
 namespace Demographics
@@ -28,6 +28,15 @@ namespace Demographics
         /// <returns>true: Present in database, false: Not present</returns>
         public static bool CheckIfPresent(string HCN)
         {
+            
+            if (Database.CreateNewDatabase("Patients", 1000, "HCN"))
+            {
+                //! Send HCN to search function in database
+                if (Search(HCN) != "")
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -35,7 +44,7 @@ namespace Demographics
         /// Create ui to prompt user for patient information
         /// </summary>
         /// <remarks>
-        /// This function will prompt the user to enter the patients information
+        /// This function will prompt the user to enter the patient's information
         /// </remarks>
         /// <param name="HCN"></param>
         /// <returns>true: successful, false: unsuccessful</returns>
@@ -68,7 +77,11 @@ namespace Demographics
         /// <param name="HCN"></param>
         public static void UpdatePatient(string HCN)
         {
-
+            if(CheckIfPresent(HCN)){
+                Search(HCN);
+            }
+            //! Receive patient information back
+            //! Show patient information and allow edits
         }
 
         /// <summary>
@@ -81,8 +94,11 @@ namespace Demographics
         /// <param name="HCN"></param>
         public static string Search(string HCN)
         {
-
             string searchResult = "";
+            Database patients = new Database("Patients");
+
+            searchResult = patients.GetRecord(HCN);
+            
             return searchResult;
         }
     }

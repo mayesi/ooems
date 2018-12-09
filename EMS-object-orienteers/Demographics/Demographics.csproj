@@ -50,5 +50,27 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EMS-object-orienteers\EMSTesting.csproj">
+      <Project>{9e5f6d20-0f47-4c98-888e-f10b09c19620}</Project>
+      <Name>EMSTesting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ems_billing\ems_billing.csproj">
+      <Project>{c68b8f5b-67d8-45d8-b81c-f25f9d4d5a31}</Project>
+      <Name>ems_billing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SchedulingUI\SchedulingUI\SchedulingUI.csproj">
+      <Project>{a909f4f4-b53d-426a-abcf-e453fbb73c8c}</Project>
+      <Name>SchedulingUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Support\Support.csproj">
+      <Project>{734b4fbd-48ea-44fe-9e0f-48ac9faaf696}</Project>
+      <Name>Support</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnitTests\UnitTests.csproj">
+      <Project>{22f4544d-5238-4507-b6ad-9dcff54817fb}</Project>
+      <Name>UnitTests</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

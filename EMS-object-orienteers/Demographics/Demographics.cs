@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-
+using Support;
 
 namespace Demographics
 {
@@ -22,15 +22,15 @@ namespace Demographics
         /// <summary>
         /// Private data members to hold patient information
         /// </summary>
-        private string HCN { get; set; }         //! Health card number, 10 numeric characters 2 alpha
+        private string HCN { get; set; }            //! Health card number, 10 numeric characters 2 alpha
         private string LastName { get; set; }
         private string FirstName { get; set; }
         private char MInitial { get; set; }
-        private string DateBirth { get; set; }  //! DDMMYYYY
-        private char Sex { get; set; }         //! Sex possible values: M,F,I,H
-        private string HeadOfHouse { get; set; }//! HCN of head of house
-        private string AddressLine1 { get; set; }
-        private string AddressLine2 { get; set; }
+        private string DateBirth { get; set; }      //! DDMMYYYY
+        private char Sex { get; set; }              //! Sex possible values: M,F,I,H
+        private string HeadOfHouse { get; set; }    //! HCN of head of house
+        private string AddressLine1 { get; set; }   //! Not required unless no head of house
+        private string AddressLine2 { get; set; }   //! Optional
         private string City { get; set; }
         private string Province { get; set; }
         private string NumPhone { get; set; }
