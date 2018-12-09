@@ -17,6 +17,11 @@ namespace Demographics
     /// </remarks>
     public class DemographicsUI
     {
+        private const int MIN_X_VALUE = 22;
+        private const int MIN_Y_VALUE = 2;
+
+
+
         /// <summary>
         /// Check if patient is already present in the database
         /// </summary>
@@ -28,7 +33,7 @@ namespace Demographics
         /// <returns>true: Present in database, false: Not present</returns>
         public static bool CheckIfPresent(string HCN)
         {
-            
+
             if (Database.CreateNewDatabase("Patients", 1000, "HCN"))
             {
                 //! Send HCN to search function in database
@@ -50,21 +55,116 @@ namespace Demographics
         /// <returns>true: successful, false: unsuccessful</returns>
         public static bool PromptForInfo(string HCN)
         {
+            Patient patient = new Patient();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Please enter patient information");
             Console.WriteLine("---------------------------------");
-            Console.WriteLine("Health Card Number:");
-            Console.WriteLine("Lastname:");
-            Console.WriteLine("Firstname:");
-            Console.WriteLine("Middle initial:");
-            Console.WriteLine("Date of birth:");
-            Console.WriteLine("Sex:");
-            Console.WriteLine("Head of Household:");
-            Console.WriteLine("Address Line 1:");
-            Console.WriteLine("Address Line 2:");
-            Console.WriteLine("City:");
-            Console.WriteLine("Province:");
-            Console.WriteLine("Phone number:");
+            Console.WriteLine("Health Card Number   :");
+            Console.WriteLine("Lastname             :");
+            Console.WriteLine("Firstname            :");
+            Console.WriteLine("Middle initial       :");
+            Console.WriteLine("Date of birth        :");
+            Console.WriteLine("Sex                  :");
+            Console.WriteLine("Head of Household    :");
+            Console.WriteLine("Address Line 1       :");
+            Console.WriteLine("Address Line 2       :");
+            Console.WriteLine("City                 :");
+            Console.WriteLine("Province             :");
+            Console.WriteLine("Phone number         :");
+            Console.WriteLine("Done                 :");
+
+            //if (CheckIfPresent(HCN))
+            //{
+            //    //! Prefill patient information
+            //}
+            //Patient patient = new Patient();
+            //Dictionary<int, string> patientFields = 
+            //Console.SetCursorPosition(MIN_X_VALUE, MIN_Y_VALUE);
+            ConsoleKeyInfo input;
+            string value = "";
+            int xPos = MIN_X_VALUE;
+            int yPos = MIN_Y_VALUE;
+            //add a method for checking each of the directions with a bool return
+            while (true)
+            {
+                do
+                {
+                    input = Console.ReadKey(true);
+                    if (input.Key == ConsoleKey.UpArrow && yPos > MIN_Y_VALUE)
+                    {
+                        --yPos;
+                    }
+                    else if (input.Key == ConsoleKey.DownArrow && yPos < 14)
+                    {
+                        ++yPos;
+                    }
+                    Console.SetCursorPosition(xPos, yPos);
+
+                }
+                while (input.Key != ConsoleKey.Enter);
+                if (yPos == 14)
+                {
+                    break;
+                }
+                value = Console.ReadLine();
+                //if (!CheckLine(patient, yPos, value))
+                if(true)
+                {
+                    Console.SetCursorPosition(MIN_X_VALUE, yPos);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(value);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                
+                Console.SetCursorPosition(MIN_X_VALUE, yPos);
+
+            }
             return false;
+        }
+
+        public static bool CheckLine(Patient patient, int yPos, string value)
+        {
+            bool result = false;
+            switch (yPos)
+            {
+                case 2:
+                    result = patient.Validate("HCN", value);
+                    break;
+                case 3:
+                    result = patient.Validate("LastName", value);
+                    break;
+                case 4:
+                    result = patient.Validate("FirstName", value);
+                    break;
+                case 5:
+                    result = patient.Validate("MInitial", value);
+                    break;
+                case 6:
+                    result = patient.Validate("DateBirth", value);
+                    break;
+                case 7:
+                    result = patient.Validate("Sex", value);
+                    break;
+                case 8:
+                    result = patient.Validate("HeadOfHouse", value);
+                    break;
+                case 9:
+                    result = patient.Validate("AddressLine1", value);
+                    break;
+                case 10:
+                    result = patient.Validate("AddressLine2", value);
+                    break;
+                case 11:
+                    result = patient.Validate("City", value);
+                    break;
+                case 12:
+                    result = patient.Validate("Province", value);
+                    break;
+                case 13:
+                    result = patient.Validate("NumPhone", value);
+                    break;
+            }
+            return result;
         }
 
         /// <summary>
@@ -77,7 +177,8 @@ namespace Demographics
         /// <param name="HCN"></param>
         public static void UpdatePatient(string HCN)
         {
-            if(CheckIfPresent(HCN)){
+            if (CheckIfPresent(HCN))
+            {
                 Search(HCN);
             }
             //! Receive patient information back
@@ -98,7 +199,7 @@ namespace Demographics
             Database patients = new Database("Patients");
 
             searchResult = patients.GetRecord(HCN);
-            
+
             return searchResult;
         }
     }

@@ -19,6 +19,11 @@ namespace Demographics
     /// </remarks>
     public class Patient
     {
+        static int Main()
+        {
+            DemographicsUI.PromptForInfo("234342344i4j");
+            return 0;
+        }
         /// <summary>
         /// Private data members to hold patient information
         /// </summary>
