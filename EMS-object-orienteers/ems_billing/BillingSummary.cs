@@ -33,11 +33,13 @@ namespace billing
         private void GenerateBillingSummary(string month)
         {
             //generate pretty report
-            string[] Summary = {"\n*************************************************\n",
+
+
+            string[] Summary = {"\n*************************************************",
                 "Encounters Billed        : " + EncountersBilled,
                 "Total Billed Procedures  : $" + TotalBilledProcedures,
                 "Total Received           : $" + ReceivedTotal,
-                "Received Percentage      : " + ReceivedPercentage,
+                "Received Percentage      : " + ReceivedPercentage + "%",
                 "Average Billed Procedure : $" + AverageBilling,
                 "Follow Up Encounters     : " + FollowUpEncounters,
                 "*************************************************" };
@@ -46,10 +48,10 @@ namespace billing
 
             foreach (string element in Summary)
             {
-                FileSupport.WriteLine("BillingFiles/MonthlySummaries/" + month, element);
+                FileSupport.WriteLine(@"c:/ooems/BillingFiles/MonthlySummaries/" + month, element);
             }
             //grab the file as an array of string
-            string[] summary = FileSupport.ReadAllLines("BillingFiles/MonthlySummaries/" + month);
+            string[] summary = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlySummaries/" + month);
             //display it
             DisplayBillingSummary(summary);
         }
@@ -98,6 +100,12 @@ namespace billing
 
             foreach (string element in All)
             {
+                //just in cast the file contains a new line with nothing on it
+                if (element == "")
+                {
+                    break;
+                }
+                
                 // keep track of these two, received changed depending
                 response = element.Substring(36);
                 amount = element.Substring(25, 11);
@@ -129,7 +137,7 @@ namespace billing
                                         "*************************************************" };
                         foreach (string flaggedElement in flag)
                         {
-                            FileSupport.WriteLine("BillingFiles/FlaggedEncounters/" + textFile, flaggedElement);
+                            FileSupport.WriteLine(@"c:/ooems/BillingFiles/FlaggedEncounters/" + textFile, flaggedElement);
                         }
                     }
                 }
