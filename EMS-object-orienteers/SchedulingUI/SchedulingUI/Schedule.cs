@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Support;
+using billing;
 /// 
 /// \class Schedule
 ///
@@ -83,7 +84,7 @@ namespace SchedulingUI
 
                 if (input.Key == ConsoleKey.D)
                 {
-                    Day.showDay(1);
+                    Day.showDay(1, 2018);
                 }
                 else if (input.Key == ConsoleKey.W)
                 {
@@ -169,7 +170,7 @@ namespace SchedulingUI
             {
                 db.AddRecord(day.ToString() + appointment.ToString() + "|" + HCH + "|" + Month.CurMonth + "|Sean|Obrien");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Console.Clear();
                 Console.WriteLine("Time slot already selected");
@@ -180,11 +181,139 @@ namespace SchedulingUI
             HCH++;
         }
 
-        
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="day"></param>
+        /// <param name="year"></param>
+        /// <param name="HCN"></param>
+        public static void addBillingCode(int day, int year, string HCN)
+        {
+            //This is the following for the ad billing code and 
+            string recall = "";
+            bool success = true;
+            string month = Month.CurMonth;
+            string todaysDay = day.ToString();
+            string thisYear = year.ToString();
 
-        
+            //Get the month number
+            switch (month)
+            {
+                case "January":
+                    {
+                        month = "1";
+                        break;
+                    }
+                case "Febuary":
+                    {
+                        month = "2";
+                        break;
+                    }
+                case "March":
+                    {
+                        month = "3";
+                        break;
+                    }
+                case "April":
+                    {
+                        month = "4";
+                        break;
+                    }
+                case "May":
+                    {
+                        month = "5";
+                        break;
+                    }
+                case "June":
+                    {
+                        month = "6";
+                        break;
+                    }
+                case "July":
+                    {
+                        month = "7";
+                        break;
+                    }
+                case "August":
+                    {
+                        month = "8";
+                        break;
+                    }
+                case "September":
+                    {
+                        month = "9";
+                        break;
+                    }
+                case "October":
+                    {
+                        month = "10";
+                        break;
+                    }
+                case "November":
+                    {
+                        month = "11";
+                        break;
+                    }
+                case "December":
+                    {
+                        month = "12";
+                        break;
+                    }
+            }
+
+            // build the date
+            string date = month + "/" + day + "/" + year;
+
+
+            // Now get the code from the user.
+            string code = "";
+            Console.WriteLine("Enter the Billing Code: ");
+            code += Console.ReadKey().ToString();
+            code += Console.ReadKey().ToString();
+            code += Console.ReadKey().ToString();
+            code += Console.ReadKey().ToString();
+            Console.WriteLine("\n");
+
+            try
+            {
+                //This date format and my respective function will probably have to be changed.
+                //Else the call requires the billing code, the HCN and potentially the gender, can parse that out 
+                //seperately within the function
+                if (Billing.AddBillingCode(date, code, HCN) == false)
+                {
+                    Console.WriteLine("Invalid Billing Code.\n");
+                    success = false;
+                }
+            }
+            //The following exception catching handles a flag for recall or an argument exception scenario being thrown by bad information
+            catch (Billing.BillingRecallException ex)
+            {
+                recall = ex.Message;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                success = false;
+            }
+            //This finally happens regardless if an exception was thrown
+            finally
+            {
+                // Display if the code was successfully done
+                if (success == true)
+                {
+                    //Console.WriteLine("Success\n");
+                    // billing code success, recall thrown
+                    if (recall != "")
+                    {
+                        Console.WriteLine("Recall in " + recall + "\nPress Any Key to return to Month Screen\n");
+                        Console.ReadKey();
+                    }
+                }
+                Month.showMonth();
+            }
+        }
     }
 }

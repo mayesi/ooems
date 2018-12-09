@@ -1,5 +1,6 @@
 ﻿using System;
 using Support;
+using billing;
 namespace SchedulingUI
 {
     class Day
@@ -24,7 +25,7 @@ namespace SchedulingUI
         /// \return  Returns void
         ///
         ///
-        static public void showDay(int selectedDay)
+        static public void showDay(int selectedDay, int year)
         {
             Console.Clear();
             Console.WindowHeight = 40;
@@ -42,25 +43,23 @@ namespace SchedulingUI
                 {
                     string[] parse = db.database[dbKey].Split('|');
                     Console.WriteLine("|                   |");
-                    Console.WriteLine("|\t" + parse[cHCN] + "\t|");
+                    Console.WriteLine("|\t" + parse[cHCN] + "\t    |              Add Billing Code");
                     Console.WriteLine("|                   |  " + val);
                     Console.WriteLine("|\t" + parse[cFirstName]+ " " + parse[cLastName] +" |");
                     Console.WriteLine("|                   |");
                     Console.WriteLine("|___________________|");
                 }
-                catch(Exception e)
+                catch(Exception)
                 {
                     Console.WriteLine("|                   |");
-                    Console.WriteLine("|                   |");
+                    Console.WriteLine("|                   |              Book appointment");
                     Console.WriteLine("|                   |  " + val);
                     Console.WriteLine("|                   |");
                     Console.WriteLine("|                   |");
                     Console.WriteLine("|___________________|");
                 }
-
             }
-
-            Schedule.bookAppointment(selectedDay ,selectAppointment());
+            selectAppointment(selectedDay, year);
             Menu.mainMenu();
         }
 
@@ -73,7 +72,7 @@ namespace SchedulingUI
         /// 
         /// \return void 
         ///
-        static public int selectAppointment()
+        static public int selectAppointment(int day, int year)
         {
             int yPos = 4;
             int xPos = 23;
@@ -107,7 +106,25 @@ namespace SchedulingUI
                 Console.SetCursorPosition(xPos, yPos);
             }
             while (input.Key != ConsoleKey.Enter);
-            //Console.ReadLine();
+
+            //build a parsing for the database
+            string parsingDatabase = day.ToString() + selection.ToString();
+            //instantiate the db
+            Database db = new Database(Month.CurMonth+" Database");
+            //Assign Parsingdb to the result of that record
+            parsingDatabase = db.GetRecord(parsingDatabase);
+            //split this all
+            string[] values = parsingDatabase.Split('|');
+
+            if (values[cHCN] != "")
+            {
+                Schedule.addBillingCode(day, year, values[cHCN]);
+            }
+            else
+            {
+                Schedule.bookAppointment(day, selection);
+            }
+
             return selection;
         }
 
@@ -128,7 +145,5 @@ namespace SchedulingUI
 
             return 0;
         }
-    }
-
-    
+    }  
 }

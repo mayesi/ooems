@@ -16,6 +16,7 @@ namespace SchedulingUI
         public const int cMonthBotMax = 12;
         public const int cMonthBuffer = 29;
         public static string[] cMonths = { "October", "November", "December" };
+        private static int year = 2018;
 
         private static string curMonth;
         public static string CurMonth
@@ -64,7 +65,7 @@ namespace SchedulingUI
             int monthLength = getMonthLength();
 
             int pos;
-            Console.WriteLine("\tESM Schedule " + CurMonth + " 2018\n");//will be made dynamic later
+            Console.WriteLine("\tESM Schedule " + CurMonth + " " + year +"\n");//will be made dynamic later
             Console.WriteLine("Sun\tMon\tTues\tWed\tThus\tFri\tSun\n");
             //CurMonth = "october";
             for (
@@ -90,7 +91,7 @@ namespace SchedulingUI
                 ++pos;
                 ++date;
             }
-            Day.showDay(selectDate(startDate));
+            Day.showDay(selectDate(startDate), year);
         }
 
         ///
@@ -145,7 +146,7 @@ namespace SchedulingUI
                 }
                 else if (input.Key == ConsoleKey.D)
                 {
-                    Day.showDay(getDate(xPos, yPos, start, null));
+                    Day.showDay(getDate(xPos, yPos, start, null), year);
                 }
                 else if (input.Key == ConsoleKey.W)
                 {
