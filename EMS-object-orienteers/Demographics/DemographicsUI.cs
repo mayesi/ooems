@@ -33,7 +33,6 @@ namespace Demographics
         /// <returns>true: Present in database, false: Not present</returns>
         public static bool CheckIfPresent(string HCN)
         {
-
             if (Database.CreateNewDatabase("Patients", 1000, "HCN"))
             {
                 //! Send HCN to search function in database
@@ -73,18 +72,26 @@ namespace Demographics
             Console.WriteLine("Phone number         :");
             Console.WriteLine("Done                 :");
 
-            //if (CheckIfPresent(HCN))
-            //{
-            //    //! Prefill patient information
-            //}
-            //Patient patient = new Patient();
-            //Dictionary<int, string> patientFields = 
-            //Console.SetCursorPosition(MIN_X_VALUE, MIN_Y_VALUE);
+            if (CheckIfPresent(HCN))
+            {
+                //! Prefill patient information
+                string[] patientString = Search(HCN).Split('|');
+                int y = 2;
+
+                //! Fill each line with the corresponding information
+                for (int i = 0 ; y <= 14; i++)
+                {
+                    Console.SetCursorPosition(MIN_X_VALUE, y);
+                    Console.WriteLine(patientString[i]);
+                }
+            }
+
+            Console.SetCursorPosition(MIN_X_VALUE, MIN_Y_VALUE);
             ConsoleKeyInfo input;
             string value = "";
             int xPos = MIN_X_VALUE;
             int yPos = MIN_Y_VALUE;
-            //add a method for checking each of the directions with a bool return
+            //! Check which key is being pressed to move the cursor
             while (true)
             {
                 do
@@ -102,13 +109,16 @@ namespace Demographics
 
                 }
                 while (input.Key != ConsoleKey.Enter);
+
+                //! Break if done is chosen
                 if (yPos == 14)
                 {
                     break;
                 }
+
                 value = Console.ReadLine();
-                //if (!CheckLine(patient, yPos, value))
-                if(true)
+
+                if (!CheckLine(patient, yPos, value))
                 {
                     Console.SetCursorPosition(MIN_X_VALUE, yPos);
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -199,8 +209,14 @@ namespace Demographics
             Database patients = new Database("Patients");
 
             searchResult = patients.GetRecord(HCN);
-
             return searchResult;
+        }
+
+        public bool AddPatient(Patient patient)
+        {
+            Database db = new Database("Patients");
+
+            return db.AddRecord("");
         }
     }
 }
