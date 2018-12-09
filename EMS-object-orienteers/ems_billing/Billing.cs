@@ -16,7 +16,7 @@ namespace billing
     /// Database classes. Exceptions are thrown for file IO, database, and parameter
     /// errors.
     /// </summary>
-    class Billing
+    public class Billing
     {
         // Private Data Members
         
@@ -307,7 +307,7 @@ namespace billing
         ///<summary>
         /// Default constructor for the billing class
         ///</summary>
-        Billing()
+        public Billing()
         {
             Month = "";
             DateOfAppointment = "";
