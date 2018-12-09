@@ -51,11 +51,11 @@ namespace billing
 
             try
             {
-                fullstring = FileSupport.FindLineByBytes("BillingFiles/masterbilling.txt", Code, 4);
+                fullstring = FileSupport.FindLineByBytes(@"c:/ooems/BillingFiles/masterbilling.txt", Code, 4);
             }
             catch (DirectoryNotFoundException)
             {
-                DirectoryInfo di = Directory.CreateDirectory("BillingFiles/");
+                DirectoryInfo di = Directory.CreateDirectory(@"c:/ooems/BillingFiles/");
                 Console.WriteLine("Directory Structure for the Master Billing Code File Does Not Exist");
             }
             catch (FileNotFoundException)
@@ -272,7 +272,7 @@ namespace billing
             // first try to open the summary file
             try
             {
-                myreport = FileSupport.ReadAllLines("BillingFiles/MonthlySummaries/" + filename);
+                myreport = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlySummaries/" + filename);
 
                 return BillingSummary.DisplayBillingSummary(myreport);
             }
@@ -280,12 +280,12 @@ namespace billing
             catch (DirectoryNotFoundException)
             {
                 // Create directory.
-                DirectoryInfo di = Directory.CreateDirectory("BillingFiles/MonthlySummaries/");
+                DirectoryInfo di = Directory.CreateDirectory(@"c:/ooems/BillingFiles/MonthlySummaries/");
 
                 try
                 {
                     //If by some miracle that creating the directory and this call the file was placed there. 
-                    myreport = FileSupport.ReadAllLines("BillingFiles/MonthlySummaries/" + filename);
+                    myreport = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlySummaries/" + filename);
                     return BillingSummary.DisplayBillingSummary(myreport);
                 }
                 // created the directory however the file does not exist, then we must read the response file, parse it, save the summary then
@@ -294,7 +294,7 @@ namespace billing
                 {
                     try
                     {
-                        myreport = FileSupport.ReadAllLines("BillingFiles/MonthlyResponse/" + filename);
+                        myreport = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlyResponse/" + filename);
 
                         BillingSummary.CalculateResponse(myreport, filename);
                     }
@@ -320,7 +320,7 @@ namespace billing
             {
                 try
                 {
-                    myreport = FileSupport.ReadAllLines("BillingFiles/MonthlyResponse/" + filename);
+                    myreport = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlyResponse/" + filename);
 
                     BillingSummary.CalculateResponse(myreport, filename);
                 }
@@ -346,7 +346,7 @@ namespace billing
         /// <param name="month"> month for the bill to be made</param>
         private void GenerateMonthlyBillRecord()
         {
-            string filename = "BillingFiles/MonthlyBills/"+DateOfAppointment.Substring(0, 4) + "_" +Month+".txt";
+            string filename = @"c:/ooems/BillingFiles/MonthlyBills/" + DateOfAppointment.Substring(0, 4) + "_" +Month+".txt";
             FileSupport.WriteLine(filename, this.ToString());
         }
 
