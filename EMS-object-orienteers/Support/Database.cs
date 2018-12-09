@@ -504,10 +504,10 @@ namespace Support
         /// It will return a list of records it finds in the database matching the search term. It will throw an
         /// ArgumentOutOfRange exception if you use a number outside the range of fields in the record.
         /// </remarks>
-        /// <param name="searchTerm">String: the primary key value used to search for the record.</param>
+        /// <param name="searchTerm">String: the value used to search for the record.</param>
         /// <param name="fieldNumber">Int: the field number to compare the search term with (starts at index 0)</param>
         /// <returns>The record as a list of strings. The method will return an empty list if no record was found.</returns>
-        public List<String> GetRecord(String searchTerm, int fieldNumber)
+        public List<String> GetRecordList(String searchTerm, int fieldNumber)
         {
             List<String> matches = new List<String>();
 
@@ -532,6 +532,43 @@ namespace Support
             return matches;
         }
 
+
+        /// <summary>
+        /// Search and return a record based on searching a particular field number.
+        /// </summary>
+        /// <remarks>
+        /// This method will search for a record in the attached database using the supplied search term.
+        /// It will return the first record it finds in the database matching the search term. It will throw an
+        /// ArgumentOutOfRange exception if you use a number outside the range of fields in the record.
+        /// </remarks>
+        /// <param name="searchTerm">String: the value used to search for the record.</param>
+        /// <param name="fieldNumber">Int: the field number to compare the search term with (starts at index 0)</param>
+        /// <returns>The first record it finds. It will return an empty string if no record was found.</returns>
+        public String GetRecord(String searchTerm, int fieldNumber)
+        {
+            string match = "";
+
+            if (needRefresh)
+            {
+                GetDatabase();
+                needRefresh = false;
+            }
+            foreach (KeyValuePair<string, string> pair in database)
+            {
+                string[] splitRecord = pair.Value.Split(SupportConstants.FIELD_DELIM);
+                if (fieldNumber >= splitRecord.Length || fieldNumber < 0)
+                {
+                    throw new ArgumentOutOfRangeException("The field number is not a valid number for this database.");
+                }
+                if (searchTerm.Equals(splitRecord[fieldNumber], StringComparison.OrdinalIgnoreCase))
+                {
+                    match = pair.Value;
+                    break;
+                }
+            }
+
+            return match;
+        }
     }
 
 
