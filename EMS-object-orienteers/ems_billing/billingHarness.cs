@@ -42,7 +42,7 @@ namespace ems_billing_TEST
                 // Display if the code was successfully done
                 if (success == true)
                 {
-                    Console.WriteLine("Success\n");
+                    //Console.WriteLine("Success\n");
                     // billing code success, recall thrown
                     if (recall != "")
                     {

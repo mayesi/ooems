@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using Support;
 namespace SchedulingUI
 {
     class Day
@@ -13,6 +9,10 @@ namespace SchedulingUI
         public const int cDayVert = 6;
         public const int cDayTopMax = 4;
         public const int cDayBotMax = 30;
+
+        public const int cHCN = 1;
+        public const int cFirstName = 3;
+        public const int cLastName = 4;
         ///
         /// \Called to display dayly user interface
         /// \details <b>showDay</b>
@@ -27,23 +27,41 @@ namespace SchedulingUI
         static public void showDay(int selectedDay)
         {
             Console.Clear();
-            Console.WriteLine("\tESM Schedule " + selectedDay);
-
             Console.WindowHeight = 40;
             Console.WindowWidth = 60;
-            Console.WriteLine("_____________________");
 
+            Database db = new Database(Month.CurMonth + " Database");
+            db.GetDatabase();
+            Console.WriteLine("ESM Schedule " + Month.CurMonth + " " + selectedDay);
+            Console.WriteLine("_____________________");
+            
             foreach (timeSlot val in Enum.GetValues(typeof(timeSlot)))
             {
-                Console.WriteLine("|                   |");
-                Console.WriteLine("|                   |");
-                Console.WriteLine("|                   |  " + val);
-                Console.WriteLine("|                   |");
-                Console.WriteLine("|                   |");
-                Console.WriteLine("|___________________|");
+                string dbKey = selectedDay.ToString() + (int)val;
+                try
+                {
+                    string[] parse = db.database[dbKey].Split('|');
+                    Console.WriteLine("|                   |");
+                    Console.WriteLine("|\t" + parse[cHCN] + "\t|");
+                    Console.WriteLine("|                   |  " + val);
+                    Console.WriteLine("|\t" + parse[cFirstName]+ " " + parse[cLastName] +" |");
+                    Console.WriteLine("|                   |");
+                    Console.WriteLine("|___________________|");
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("|                   |");
+                    Console.WriteLine("|                   |");
+                    Console.WriteLine("|                   |  " + val);
+                    Console.WriteLine("|                   |");
+                    Console.WriteLine("|                   |");
+                    Console.WriteLine("|___________________|");
+                }
 
             }
-            selectAppointment();
+
+            Schedule.bookAppointment(selectedDay ,selectAppointment());
+            Menu.mainMenu();
         }
 
         ///
@@ -55,7 +73,7 @@ namespace SchedulingUI
         /// 
         /// \return void 
         ///
-        static public void selectAppointment()
+        static public int selectAppointment()
         {
             int yPos = 4;
             int xPos = 23;
@@ -89,8 +107,8 @@ namespace SchedulingUI
                 Console.SetCursorPosition(xPos, yPos);
             }
             while (input.Key != ConsoleKey.Enter);
-            Console.ReadLine();
-
+            //Console.ReadLine();
+            return selection;
         }
 
         

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using billing;
 
 namespace UnitTests
 {
@@ -18,6 +19,7 @@ namespace UnitTests
         [TestMethod]
         public void BILLING_TEST_Constructor_Default()
         {
+            Billing b = new Billing();
         }
 
         /// <summary>
@@ -210,13 +212,33 @@ namespace UnitTests
         /// Test Name           : BILLINGSUMMARY_TEST_FlagForViewing
         /// Description         : Tests the FlagForViewing Methods ability to throw an exception containing the amound of records that are to be reviewed
         /// Performed           : Automatic : Call the method and catch the exception using a test file that contains a record that has to be reviewed.
-        /// Type                : exception
+        /// Type                : functional
         /// Expected outcome    : exception thrown containing total number of review inserts.
         ///
         /// </summary>
         [TestMethod]
         public void BILLINGSUMMARY_TEST_FlagForViewing()
         {
+        }
+
+        /// <summary>
+        /// Tests public static bool ViewReport(int month, int year) method.
+        /// </summary>
+        /// <remarks>
+        /// This method always returns true. It shouldn't throw any exceptions
+        /// </remarks>
+        [TestMethod]
+        public void VIEWREPORT_Test()
+        {
+            bool retVal = Billing.ViewReport(11, 2017);
+            bool expectedResult = true;
+            Assert.AreEqual(expectedResult, retVal);
+        }
+
+        [TestMethod]
+        public void ()
+        {
+
         }
     }
 }

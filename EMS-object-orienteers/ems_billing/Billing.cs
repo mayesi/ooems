@@ -16,7 +16,7 @@ namespace billing
     /// Database classes. Exceptions are thrown for file IO, database, and parameter
     /// errors.
     /// </summary>
-    class Billing
+    public class Billing
     {
         // Private Data Members
         
@@ -49,8 +49,24 @@ namespace billing
 
             string fullstring = "";
 
+            try
+            {
+                fullstring = FileSupport.FindLineByBytes(@"c:/ooems/BillingFiles/masterbilling.txt", Code, 4);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                DirectoryInfo di = Directory.CreateDirectory(@"c:/ooems/BillingFiles/");
+                Console.WriteLine("Directory Structure for the Master Billing Code File Does Not Exist");
+            }
+            catch (FileNotFoundException)
+            {
+                
+            }
+            catch
+            {
 
-            fullstring = FileSupport.FindLineByBytes("BillingFiles/masterbilling.txt", Code, 4);
+            }
+
 
             if (fullstring == "")
             {
@@ -256,7 +272,7 @@ namespace billing
             // first try to open the summary file
             try
             {
-                myreport = FileSupport.ReadAllLines("BillingFiles/MonthlySummaries/" + filename);
+                myreport = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlySummaries/" + filename);
 
                 return BillingSummary.DisplayBillingSummary(myreport);
             }
@@ -264,29 +280,60 @@ namespace billing
             catch (DirectoryNotFoundException)
             {
                 // Create directory.
-                DirectoryInfo di = Directory.CreateDirectory("BillingFiles/MonthlySummaries/");
+                DirectoryInfo di = Directory.CreateDirectory(@"c:/ooems/BillingFiles/MonthlySummaries/");
 
                 try
                 {
                     //If by some miracle that creating the directory and this call the file was placed there. 
-                    myreport = FileSupport.ReadAllLines("BillingFiles/MonthlySummaries/" + filename);
+                    myreport = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlySummaries/" + filename);
                     return BillingSummary.DisplayBillingSummary(myreport);
                 }
                 // created the directory however the file does not exist, then we must read the response file, parse it, save the summary then
                 // display the summary
                 catch (FileNotFoundException)
                 {
-                    myreport = FileSupport.ReadAllLines("BillingFiles/MonthlyResponse/" + filename);
+                    try
+                    {
+                        myreport = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlyResponse/" + filename);
 
-                    BillingSummary.CalculateResponse(myreport, filename);
+                        BillingSummary.CalculateResponse(myreport, filename);
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        Console.WriteLine("No response file found.\n");
+                        return false;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
                 }
             }
             // Basically does the same thing again as above
             catch (FileNotFoundException)
             {
-                myreport = FileSupport.ReadAllLines("BillingFiles/MonthlyResponse/" + filename);
+                try
+                {
+                    myreport = FileSupport.ReadAllLines(@"c:/ooems/BillingFiles/MonthlyResponse/" + filename);
 
-                BillingSummary.CalculateResponse(myreport, filename);
+                    BillingSummary.CalculateResponse(myreport, filename);
+                }
+                catch
+                {
+                    Console.WriteLine("No response file found.\n");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
             //this function always returns true.
             return true;
@@ -299,7 +346,7 @@ namespace billing
         /// <param name="month"> month for the bill to be made</param>
         private void GenerateMonthlyBillRecord()
         {
-            string filename = "BillingFiles/MonthlyBills/"+DateOfAppointment.Substring(0, 4) + "_" +Month+".txt";
+            string filename = @"c:/ooems/BillingFiles/MonthlyBills/" + DateOfAppointment.Substring(0, 4) + "_" +Month+".txt";
             FileSupport.WriteLine(filename, this.ToString());
         }
 
@@ -307,7 +354,7 @@ namespace billing
         ///<summary>
         /// Default constructor for the billing class
         ///</summary>
-        Billing()
+        public Billing()
         {
             Month = "";
             DateOfAppointment = "";
@@ -328,7 +375,7 @@ namespace billing
         /// <param name="BGender">Gender of the patient</param>
         /// <param name="BC">Billing Code</param>
         /// <param name="BFee">Billed Fee</param>
-        Billing(string BMonth, string DoA, string HCN, char BGender, string BC, string BFee)
+        public Billing(string BMonth, string DoA, string HCN, char BGender, string BC, string BFee)
         {
             Month = BMonth;
             DateOfAppointment = DoA;

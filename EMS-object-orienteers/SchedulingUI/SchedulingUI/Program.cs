@@ -20,12 +20,11 @@ namespace SchedulingUI
             Console.Title ="ESM";
             Console.ForegroundColor = ConsoleColor.Green;
             string userInput = "";
-            Menu mu = new Menu();
             Schedule sch = new Schedule();
 
             while (run)
             {
-                userInput = mu.mainMenu();
+                userInput = Menu.mainMenu();
                 Console.Clear();
                 switch(userInput)
                 {
@@ -37,10 +36,10 @@ namespace SchedulingUI
                         break;
                     case schMenu:
                         
-                        sch.format();
+                        Schedule.ScheduleMenu();
                         break;
                     case billMenu:
-                        mu.billingMenu();
+                        Menu.BillingMenu();
                         break;
                     case quit:
                         Environment.Exit(0);
@@ -49,12 +48,7 @@ namespace SchedulingUI
                         Console.Write("Please select an option between 1-5");
                         break;
                 }
-
             }
-            
-
-
-
         }
     }
 }
