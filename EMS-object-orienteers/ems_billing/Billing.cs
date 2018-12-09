@@ -44,7 +44,7 @@ namespace billing
         /// <param name="Date"> visit date </param>
         /// <param name="Code"> billing code </param>
         /// <param name="HCN"> health card number </param>
-        public static bool AddBillingCode(string Date, string Code, string HCN, char gender)
+        public static bool AddBillingCode(string Date, string Code, string HCN)
         {
 
             string fullstring = "";
@@ -67,6 +67,9 @@ namespace billing
 
             }
 
+            //Call the patient database and get the gender now
+
+            
 
             if (fullstring == "")
             {
@@ -80,6 +83,17 @@ namespace billing
                 string normalized;
                 string month;
                 datebuilder(Date, out normalized, out month);
+
+                //Now get the info from the database about that patient, traverse the record to the 
+                string patient = FileSupport.FindLineByBytes(@"c:/ooems/Databases/Patients.txt", HCN, 12);
+                int i = 1;
+                while (i < 5)
+                {
+                    patient = patient.Substring(patient.IndexOf("|")+1);
+                    i++;
+                }
+                char gender = char.Parse(patient.Substring(0, 1));
+                
 
                 Billing BillingEntry = new Billing(month, normalized, HCN, gender, Code, smoney);
 
@@ -145,12 +159,16 @@ namespace billing
             string year = "";
             monthName = "";
 
+            //First get the month out, compare length, add 0 if nessessary.
             month = date.Substring(0, 2);
-            if (month.Length < 2)
+            if (month.Contains("/"))
             {
+                month = month.Substring(0, 1);
                 month = "0" + month;
             }
             monthName = getMonthName(month);
+
+            //Get day, compare length, add 0 if nessessary
             int daypos = date.IndexOf('/');
             day = date.Substring(daypos+1,2);
             if (day.Contains("/"))
@@ -158,6 +176,7 @@ namespace billing
                 day = day.Substring(0, 1);
                 day = "0" + day;
             }
+            //Add the year
             int yearpos = date.LastIndexOf('/');
             year = date.Substring(yearpos+1);
             normalized = year + month + day;

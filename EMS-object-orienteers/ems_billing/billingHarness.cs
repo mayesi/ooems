@@ -20,11 +20,11 @@ namespace ems_billing_TEST
                 //This date format and my respective function will probably have to be changed.
                 //Else the call requires the billing code, the HCN and potentially the gender, can parse that out 
                 //seperately within the function
-                if (Billing.AddBillingCode(DateTime.Today.ToShortDateString(), "A003", "1234567890AB", 'M') == false)
-                {
-                    Console.WriteLine("Invalid Billing Code.\n");
-                    success = false;
-                }
+                //if (Billing.AddBillingCode(DateTime.Today.ToShortDateString(), "A003", "1234567890AB", 'M') == false)
+                //{
+                //    Console.WriteLine("Invalid Billing Code.\n");
+                //    success = false;
+                //}
             }
             //The following exception catching handles a flag for recall or an argument exception scenario being thrown by bad information
             catch (Billing.BillingRecallException ex)
