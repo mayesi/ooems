@@ -1,11 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// FILE 			: Month.cs
+// PROJECT          : INFO2180 EMS Solution
+// PROGRAMMER 		: Sean O'Brien, Object Orienteers
+// FIRST VERSION 	: December 9th 2018
+// DESCRIPTION 	    : Contains the logic for the UI display of the month
+using System;
 
 namespace SchedulingUI
 {
+    /// <summary>
+    /// This class represents the visual display of the month selected. Allows easy traversal
+    /// of the prgram to quickly and effectively choose a day of the month within the schedule.
+    /// The single bug, is in december, you cant traverse to the 30th or 31st. This is an unfortunate 
+    /// error due to the mathemetical operations used to allign the grid. However, Sean O'Brien did a fantastic
+    /// job with this ui, and deserves bonus points, even if they are at mine, Brendan Bradings, expense
+    /// </summary>
     class Month 
     {
         public const int cMonthvert = 2;

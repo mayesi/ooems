@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// FILE 			: Week.cs
+// PROJECT          : INFO2180 EMS Solution
+// PROGRAMMER 		: Sean O'Brien, Object Orienteers
+// FIRST VERSION 	: December 9th 2018
+// DESCRIPTION 	    : Contains the logic for displaying a week. nothing else
+using System;
 
 namespace SchedulingUI
 {
+    /// <summary>
+    /// This class represends the scheduling for a weeks worth of appointments.
+    /// Bugs include Functionality breaking issues regarding the month being superimposed
+    /// Not functional, but pretty.
+    /// </summary>
     class Week
     {
         enum DofW { Sunday, Monday, Tuesday, Wednesday, Thusday, Friday, Saturday };
