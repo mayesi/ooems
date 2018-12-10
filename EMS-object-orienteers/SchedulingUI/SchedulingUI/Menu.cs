@@ -167,7 +167,7 @@ namespace SchedulingUI
                 }
                 else if (input.Key == ConsoleKey.D)
                 {
-                    Day.showDay(1);
+                    Day.showDay(1,2018);
                 }
                 else if (input.Key == ConsoleKey.M)
                 {

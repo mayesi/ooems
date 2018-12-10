@@ -55,6 +55,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Demographics\Demographics.csproj">
+      <Project>{90f7b8bd-2798-488c-9a78-b0170420a7a2}</Project>
+      <Name>Demographics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ems_billing\ems_billing.csproj">
       <Project>{c68b8f5b-67d8-45d8-b81c-f25f9d4d5a31}</Project>
       <Name>ems_billing</Name>
