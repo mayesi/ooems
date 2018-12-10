@@ -19,21 +19,38 @@ namespace Demographics
     /// </remarks>
     public class Patient
     {
+
         /// <summary>
         /// Private data members to hold patient information
         /// </summary>
-        private string HCN { get; set; }            //! Health card number, 10 numeric characters 2 alpha
+        public string HCN { get; private set; }            //! Health card number, 10 numeric characters 2 alpha
         private string LastName { get; set; }
         private string FirstName { get; set; }
         private char MInitial { get; set; }
         private string DateBirth { get; set; }      //! DDMMYYYY
         private char Sex { get; set; }              //! Sex possible values: M,F,I,H
         private string HeadOfHouse { get; set; }    //! HCN of head of house
-        private string AddressLine1 { get; set; }   //! Not required unless no head of house
-        private string AddressLine2 { get; set; }   //! Optional
-        private string City { get; set; }
-        private string Province { get; set; }
-        private string NumPhone { get; set; }
+        public string AddressLine1 { get; private set; }   //! Not required unless no head of house
+        public string AddressLine2 { get; private set; }   //! Optional
+        public string City { get; private set; }
+        public string Province { get; private set; }
+        public string NumPhone { get; private set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            string thisstring = "";
+            thisstring += this.HCN + "|" + this.LastName + "|" + this.FirstName + "|" + this.MInitial + "|" + this.DateBirth +
+                "|" + this.Sex + "|" + this.HeadOfHouse + "|" + this.AddressLine1 + "|" + this.AddressLine2 + "|" + this.City
+                + "|" + this.Province + "|" + this.NumPhone;
+
+            return thisstring;
+        }
+
 
         /// <summary>
         /// Validate patient information
@@ -67,7 +84,7 @@ namespace Demographics
                             this.HeadOfHouse = input;
                             result = true;
                         }
-                        
+
                     }
                     break;
                 case "DateBirth":
@@ -79,25 +96,29 @@ namespace Demographics
                     }
                     break;
                 case "AddressLine 1":
-                    Regex AddressRegex = new Regex(@"^\d*\s[a-zA-z ]*\s[a-zA-z.]*$");
-                    if (AddressRegex.IsMatch(input))
-                    {
-                        if (field.Equals("AddressLine1"))
-                        {
-                            this.AddressLine1 = input;
-                            result = true;
-                        }
-                        else if (field.Equals("AddressLine2"))
-                        {
-                            this.AddressLine2 = input;
-                            result = true;
-                        }
-                    }
+                    //Regex AddressRegex = new Regex(@"^\d*\s[a-zA-z ]*\s[a-zA-z.]*$");
+
+                    this.AddressLine1 = input;
+                    result = true;
+
+                    break;
+                case "AddressLine 2":
+                    //Regex AddressRegex = new Regex(@"^\d*\s[a-zA-z ]*\s[a-zA-z.]*$");
+
+                    this.AddressLine2 = input;
+                    result = true;
+
+                    break;
+                case "City":
+                    this.City = input;
+                    result = true;
                     break;
                 case "Province":
-                    Regex ProvinceRegex = new Regex(@"^[a-zA-Z]{2}$");
-                    if (ProvinceRegex.IsMatch(input))
+                    string[] provinces = {"AB","BC","MB","NB","NL","NS",
+                        "NT","NU","ON","PE","QC","SK","YT"};
+                    if (provinces.Contains(input))
                     {
+
                         this.Province = input;
                         result = true;
                     }
@@ -112,7 +133,8 @@ namespace Demographics
                     break;
                 case "FirstName":
                 case "LastName":
-                    Regex NameRegex = new Regex(@"^[a-zA-ZàâäôéèëêïîçùûüÿæœÀÂÄÔÉÈËÊÏÎŸÇÙÛÜÆŒäöüßÄÖÜẞąćęłńóśźżĄĆĘŁŃÓŚŹŻ]*$");
+                    //! Ministry only accepts standard ascii
+                    Regex NameRegex = new Regex(@"^[a-zA-Z]*$");
                     if (NameRegex.IsMatch(input))
                     {
                         if (field.Equals("FirstName"))
@@ -128,7 +150,8 @@ namespace Demographics
                     break;
                 case "MInitial":
                     char initial = Convert.ToChar(input);
-                    if (char.IsLetter(initial)){
+                    if (char.IsLetter(initial))
+                    {
                         this.MInitial = initial;
                         result = true;
                     }
@@ -148,20 +171,5 @@ namespace Demographics
 
             return result;
         }
-
-        /// <summary>
-        /// Set function for AddressLine2
-        /// </summary>
-        /// <remarks>
-        /// Sets the value for AddressLine2
-        /// </remarks>
-        /// <param name="addressLine2"></param>
-        /// <returns>true: successful, false: unsuccessful</returns>
-        public bool SetAddressLine2(string addressLine2)
-        {
-            this.AddressLine2 = addressLine2;
-            return true;
-        }
     }
-
 }

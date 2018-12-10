@@ -17,7 +17,7 @@ namespace Demographics
     /// </remarks>
     public class DemographicsUI
     {
-        private const int MIN_X_VALUE = 22;
+        private const int MIN_X_VALUE = 26;
         private const int MIN_Y_VALUE = 2;
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Demographics
         /// </remarks>
         /// <param name="HCN"></param>
         /// <returns>true: successful, false: unsuccessful</returns>
-        public static bool PromptForInfo(string HCN)
+        public static Patient PromptForInfo(string HCN)
         {
             Console.Clear();
             Console.CursorVisible = true;
@@ -65,19 +65,19 @@ namespace Demographics
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Please enter patient information");
             Console.WriteLine("---------------------------------");
-            Console.WriteLine("Health Card Number   :");
-            Console.WriteLine("Lastname             :");
-            Console.WriteLine("Firstname            :");
-            Console.WriteLine("Middle initial       :");
-            Console.WriteLine("Date of birth        :");
-            Console.WriteLine("Sex                  :");
-            Console.WriteLine("Head of Household    :");
-            Console.WriteLine("Address Line 1       :");
-            Console.WriteLine("Address Line 2       :");
-            Console.WriteLine("City                 :");
-            Console.WriteLine("Province             :");
-            Console.WriteLine("Phone number         :");
-            Console.WriteLine("Done                 :");
+            Console.WriteLine("Health Card Number       :");
+            Console.WriteLine("Lastname                 :");
+            Console.WriteLine("Firstname                :");
+            Console.WriteLine("Middle initial           :");
+            Console.WriteLine("Date of birth DD/MM/YYYY :");
+            Console.WriteLine("Sex                      :");
+            Console.WriteLine("Head of Household        :");
+            Console.WriteLine("Address Line 1           :");
+            Console.WriteLine("Address Line 2 optional  :");
+            Console.WriteLine("City                     :");
+            Console.WriteLine("Province                 :");
+            Console.WriteLine("Phone number xxx xxx xxxx:");
+            Console.WriteLine("Done                     :");
 
             if (CheckIfPresent(HCN))
             {
@@ -93,9 +93,24 @@ namespace Demographics
                     Console.WriteLine(patientString[i]);
                     ++y;
                 }
+                patient.Validate("HCN", patientString[0]);
+                patient.Validate("LastName", patientString[1]);
+                patient.Validate("FirstName", patientString[2]);
+                patient.Validate("MInitial", patientString[3]);
+                patient.Validate("DateBirth", patientString[4]);
+                patient.Validate("Sex", patientString[5]);
+                patient.Validate("HeadOfHouse", patientString[6]);
+                patient.Validate("Address Line 1", patientString[7]);
+                patient.Validate("Address Line 2", patientString[8]);
+                patient.Validate("City", patientString[9]);
+                patient.Validate("Province", patientString[10]);
+                patient.Validate("NumPhone", patientString[11]);
+
             }
 
             Console.SetCursorPosition(MIN_X_VALUE, MIN_Y_VALUE);
+            Console.WriteLine(HCN);
+            patient.Validate("HCN",HCN);
             ConsoleKeyInfo input;
             string value = "";
             int xPos = MIN_X_VALUE;
@@ -137,7 +152,128 @@ namespace Demographics
                 Console.SetCursorPosition(MIN_X_VALUE, yPos);
 
             }
-            return false;
+            return patient;
+        }
+
+        public static Patient PromptForInfo(string HCN, Patient careGiver)
+        {
+            Console.Clear();
+            Console.CursorVisible = true;
+            Patient patient = new Patient();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Please enter patient information");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Health Card Number       :");
+            Console.WriteLine("Lastname                 :");
+            Console.WriteLine("Firstname                :");
+            Console.WriteLine("Middle initial           :");
+            Console.WriteLine("Date of birth DD/MM/YYYY :");
+            Console.WriteLine("Sex                      :");
+            Console.WriteLine("Head of Household        :");
+            Console.WriteLine("Address Line 1           :");
+            Console.WriteLine("Address Line 2 optional  :");
+            Console.WriteLine("City                     :");
+            Console.WriteLine("Province                 :");
+            Console.WriteLine("Phone number xxx xxx xxxx:");
+            Console.WriteLine("Done                     :");
+
+            if (CheckIfPresent(HCN))
+            {
+                //! Prefill patient information
+                int numFields = 0;
+                string[] patientString = Search(HCN).Split('|');
+                int y = 2;
+                numFields = patientString.Length;
+                //! Fill each line with the corresponding information
+                for (int i = 0; i <= 11; i++)
+                {
+                    Console.SetCursorPosition(MIN_X_VALUE, y);
+                    Console.WriteLine(patientString[i]);
+                    ++y;
+                }
+                patient.Validate("HCN", patientString[0]);
+                patient.Validate("LastName", patientString[1]);
+                patient.Validate("FirstName", patientString[2]);
+                patient.Validate("MInitial", patientString[3]);
+                patient.Validate("DateBirth", patientString[4]);
+                patient.Validate("Sex", patientString[5]);
+                patient.Validate("HeadOfHouse", patientString[6]);
+                patient.Validate("Address Line 1", patientString[7]);
+                patient.Validate("Address Line 2", patientString[8]);
+                patient.Validate("City", patientString[9]);
+                patient.Validate("Province", patientString[10]);
+                patient.Validate("NumPhone", patientString[11]);
+            }
+
+            Console.SetCursorPosition(MIN_X_VALUE, 2);
+            Console.WriteLine(HCN);
+
+            //! Fill out caregiver's information that is the same for the patient
+            Console.SetCursorPosition(MIN_X_VALUE, 9);
+            Console.WriteLine(careGiver.AddressLine1);
+            patient.Validate("AddressLine 1",careGiver.AddressLine1);
+            Console.SetCursorPosition(MIN_X_VALUE, 10);
+            Console.WriteLine(careGiver.AddressLine2);
+            patient.Validate("AddressLine 2", careGiver.AddressLine2);
+
+            Console.SetCursorPosition(MIN_X_VALUE, 11);
+            Console.WriteLine(careGiver.City);
+            patient.Validate("City", careGiver.City);
+
+            Console.SetCursorPosition(MIN_X_VALUE, 12);
+            Console.WriteLine(careGiver.Province);
+            patient.Validate("Province", careGiver.Province);
+
+            Console.SetCursorPosition(MIN_X_VALUE, 13);
+            Console.WriteLine(careGiver.NumPhone);
+            patient.Validate("NumPhone", careGiver.NumPhone);
+
+
+
+            Console.SetCursorPosition(MIN_X_VALUE, MIN_Y_VALUE);
+
+            ConsoleKeyInfo input;
+            string value = "";
+            int xPos = MIN_X_VALUE;
+            int yPos = MIN_Y_VALUE;
+            //! Check which key is being pressed to move the cursor
+            while (true)
+            {
+                do
+                {
+                    input = Console.ReadKey(true);
+                    if (input.Key == ConsoleKey.UpArrow && yPos > MIN_Y_VALUE)
+                    {
+                        --yPos;
+                    }
+                    else if (input.Key == ConsoleKey.DownArrow && yPos < 14)
+                    {
+                        ++yPos;
+                    }
+                    Console.SetCursorPosition(xPos, yPos);
+
+                }
+                while (input.Key != ConsoleKey.Enter);
+
+                //! Break if done is chosen
+                if (yPos == 14)
+                {
+                    break;
+                }
+                value = Console.ReadLine();
+
+                if (!CheckLine(patient, yPos, value))
+                {
+                    Console.SetCursorPosition(MIN_X_VALUE, yPos);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(value);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+
+                Console.SetCursorPosition(MIN_X_VALUE, yPos);
+
+            }
+            return patient;
         }
 
         /// <summary>
@@ -178,10 +314,10 @@ namespace Demographics
                     result = patient.Validate("HeadOfHouse", value);
                     break;
                 case 9:
-                    result = patient.Validate("AddressLine1", value);
+                    result = patient.Validate("AddressLine 1", value);
                     break;
                 case 10:
-                    result = patient.Validate("AddressLine2", value);
+                    result = patient.Validate("AddressLine 2", value);
                     break;
                 case 11:
                     result = patient.Validate("City", value);
@@ -243,11 +379,24 @@ namespace Demographics
         /// </remarks>
         /// <param name="patient"></param>
         /// <returns>true: successful, false: unsuccessful</returns>
-        public bool AddPatient(Patient patient)
+        static public bool AddPatient(Patient patient)
         {
             Database db = new Database("Patients");
-
-            return db.AddRecord("");
+            try
+            {
+                return db.AddRecord(patient.ToString());
+            }
+            catch
+            {
+                Console.WriteLine("Patient already exists in database");
+                return false;
+            }
+        }
+        public bool PatientWithCaregiver(string HCN)
+        {
+            Patient careGiver = PromptForInfo(HCN);
+            PromptForInfo(careGiver.HCN);
+            return false;
         }
     }
 }
