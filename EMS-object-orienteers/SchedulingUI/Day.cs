@@ -1,9 +1,23 @@
-﻿using System;
+﻿// FILE 			: Day.cs
+// PROJECT          : INFO2180 EMS Solution
+// PROGRAMMER 		: Sean O'Biren, Object Orienteers
+// FIRST VERSION 	: December 9th 2018
+// DESCRIPTION 	    : Contains the logic for displaying a day of the ems solution
+using System;
 using Support;
-using billing;
+
 namespace SchedulingUI
 {
-    class Day
+    /// <summary>
+    /// This class represents a day of the schedule
+    /// </summary>
+    /// <remarks>
+    /// This class contains the logic to display a day and allows the user to
+    /// navigate the menu to select an appointment time. The user interface
+    /// informs the user whether a time slot is avalible or not. After a user 
+    /// a filled time slot, they will be able to add a billing code.  
+    /// </remarks>
+    public class Day
     {
         enum timeSlot { eightAM, nineAM, tenAM, elevenAM, noon, onePM }
 
@@ -62,7 +76,6 @@ namespace SchedulingUI
                 }
             }
             selectAppointment(selectedDay, year);
-
             Menu.mainMenu();
         }
 
@@ -78,7 +91,7 @@ namespace SchedulingUI
         /// </remarks>
         /// <param name="day">day selected from month</param>
         /// <param name="year">current year</param>
-        /// <returns>int selection: which slot is picked</returns>
+        /// <returns name="selection">which slot is picked</returns>
         static public int selectAppointment(int day, int year)
         {
             int yPos = 4;

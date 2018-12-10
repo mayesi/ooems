@@ -1,15 +1,16 @@
-﻿using System;
+﻿// FILE 			: Menu.cs
+// PROJECT          : INFO2180 EMS Solution
+// PROGRAMMER 		: Sean O'Biren, Object Orienteers
+// FIRST VERSION 	: December 9th 2018
+// DESCRIPTION 	    : Contains the logic for displaying menus of the ems System;
+using System;
+using billing;
 
-/// 
-/// \class Menu
-///
-/// \brief The purpose of this class is to display different user interface menus
-/// for the user.
-///
-/// This flies contains the class methods used in Menu.cs.
-///
-/// \author A <i>Sean O'Brien</i>
-///
+/// <summary>
+/// This class contains menus that are used to display infomation to the user.
+/// The purpose of this class is to display different user interface menus and
+/// allow them to control the flow of the program.
+/// </summary>
 namespace SchedulingUI
 {
     public class Menu
@@ -19,21 +20,19 @@ namespace SchedulingUI
         public const int cTopMax = 4;
         public const int cBotMax = 20;
         public const int cLeftMax = 3;
-        public const int cRightMax = 40;
+        public const int cRightMax = 36;
 
         public static string[] cAllMonths = { "January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
 
-
-        ///
-        /// \Called to display the main menu of the user interface
-        /// \details <b>Main Menu</b>
-        ///
+        /// <summary>
+        /// Display main menu.
+        /// </summary>
+        /// <remarks>
         ///  This method will display the options for the user to start navigating the menu
         ///  of the EMS system. The select method is called to receive the option the user selected.
-        /// 
-        /// \return   Returns int: return value from the select method
-        ///
+        /// </remarks>
+        /// <returns name="select">return value of the the select function</returns>
         public static string mainMenu()
         {
             Console.Clear();
@@ -49,17 +48,14 @@ namespace SchedulingUI
             return select();
         }
 
-
-
-        ///
-        /// \Called to display the Schedule menu of the user interface
-        /// \details <b>Schedule Menu</b>
-        ///
-        ///  This method will display the options for the user 
-        ///  of the EMS system. The select method is called to receive the option the user selected.
-        /// 
-        /// \return   Returns int: return value from the select method
-        ///
+        /// <summary>
+        /// Display schedule menu.
+        /// </summary>
+        /// <remarks>
+        ///  his method will display the options for the user of the EMS system. 
+        ///  The select method is called to receive the option the user selected
+        /// </remarks>
+        /// <returns name="select">return value of the the select function</returns>
         public string scheduleMenu()
         {
             Console.WriteLine("Welcome to the hospital - Schedule Menu");
@@ -74,15 +70,15 @@ namespace SchedulingUI
         }
 
 
-        ///
-        /// \Called to display the billing menu of the user interface
-        /// \details <b>Billing Menu</b>
-        ///
-        ///  This method will display the options for the user to navigate the billing menu
-        ///  of the ESM system. The select method is called to receive the option the user selected.
-        /// 
-        /// \return  Returns int: return value from the select method
-        ///
+
+        /// <summary>
+        /// Display billing report.
+        /// </summary>
+        /// <remarks>
+        ///  The user can select a month in order to view the billing report
+        ///  for the selected month.
+        /// </remarks>
+        /// <returns>void</returns>
         public static void BillingMenu()
         {
             int monthCount = 0;
@@ -114,22 +110,20 @@ namespace SchedulingUI
                     monthCount++;
                 }
             }
-
-
-
-
             selectMonth();
         }
 
-        ///
-        /// \Called to select the slot for an appointment 
-        /// \details <b>selctAppointment</b>
-        /// 
+        /// <summary>
+        /// select the slot for an appointment.
+        /// </summary>
+        /// <remarks>
         ///  This method will allow the user to select which time slot the 
-        ///  patient wishes to book their appointment
-        /// 
-        /// \return void 
-        ///
+        ///  patient wishes to book their appointment. The option is select
+        ///  which day of the month the user wishes to view in day view.
+        /// </remarks>
+        /// <param name="day">day selected from month</param>
+        /// <param name="year">current year</param>
+        /// <returns name="selection">which slot is picked</returns>
         static public void selectMonth()
         {
             int yPos = 3;
@@ -142,9 +136,9 @@ namespace SchedulingUI
 
             do
             {
-                getTimeSlot(xPos, yPos, selection, "red");
+                highlightSelection(xPos, yPos, selection, "red");
                 input = Console.ReadKey(true);
-                getTimeSlot(xPos, yPos, selection, "green");
+                highlightSelection(xPos, yPos, selection, "green");
                 if (input.Key == ConsoleKey.UpArrow && yPos > cTopMax)
                 {
                     yPos = yPos - cVert;
@@ -155,19 +149,19 @@ namespace SchedulingUI
                     yPos = yPos + cVert;
                     selection += 3;
                 }
-                else if (input.Key == ConsoleKey.RightArrow && xPos > cRightMax)
+                else if (input.Key == ConsoleKey.RightArrow && xPos < cRightMax)
                 {
                     xPos = xPos + cHorz;
                     ++selection;
                 }
-                else if (input.Key == ConsoleKey.LeftArrow && xPos <= cLeftMax)
+                else if (input.Key == ConsoleKey.LeftArrow && xPos >= cLeftMax)
                 {
                     xPos = xPos - cHorz;
                     --selection;
                 }
                 else if (input.Key == ConsoleKey.D)
                 {
-                    Day.showDay(1,2018);
+                    Day.showDay(1, 2018);
                 }
                 else if (input.Key == ConsoleKey.M)
                 {
@@ -177,12 +171,30 @@ namespace SchedulingUI
                 Console.SetCursorPosition(xPos, yPos);
             }
             while (input.Key != ConsoleKey.Enter);
-            Console.ReadLine();
-            //Billing.ViewReport(selection, 2018);
-            // .ViewReport(selection, 2018);
+            Console.Clear();
+            Billing.ViewReport(selection, 2018);
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            mainMenu();
+            
+
         }
 
-        static public int getTimeSlot(int xPos, int yPos, int selection, string colour)
+
+        /// <summary>
+        /// Highlight selected item.
+        /// </summary>
+        /// <remarks>
+        ///  The colour of a word where the cursor is placed will
+        ///  change colour as a way to clearly show to the user 
+        ///  clearly which option they will select.
+        /// </remarks>
+        /// <param name="xPos">X position of cursor</param>
+        /// <param name="yPos">Y position of cursor</param>
+        /// <param name="selection">what is being changed colours</param>
+        /// <param name="colour">colour to change to</param>
+        /// <returns>void</returns>
+        static public int highlightSelection(int xPos, int yPos, int selection, string colour)
         {
 
             Console.SetCursorPosition(xPos, yPos);
@@ -199,14 +211,15 @@ namespace SchedulingUI
             return 0;
         }
 
-        ///
-        /// \Called to get user input
-        /// \details <b>Select</b>
-        /// 
-        ///  This method will prompt the user to enter a selection.
-        /// 
-        /// \return  Returns int: ascii value of what the user selected
-        ///
+
+        /// <summary>
+        /// Get user input.
+        /// </summary>
+        /// <remarks>
+        ///  The user is promted to enter a key to select an option
+        ///  from a menu. 
+        /// </remarks>
+        /// <returns name="buffer">user entered value</returns>
         static public string select()
         {
             
@@ -216,9 +229,5 @@ namespace SchedulingUI
             Console.Clear();
             return buffer;
         }
-
-
     }
-
-   
 }
