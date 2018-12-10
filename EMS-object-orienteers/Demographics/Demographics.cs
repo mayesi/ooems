@@ -24,8 +24,8 @@ namespace Demographics
         /// Private data members to hold patient information
         /// </summary>
         public string HCN { get; private set; }            //! Health card number, 10 numeric characters 2 alpha
-        private string LastName { get; set; }
-        private string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
         private char MInitial { get; set; }
         private string DateBirth { get; set; }      //! DDMMYYYY
         private char Sex { get; set; }              //! Sex possible values: M,F,I,H
@@ -50,6 +50,74 @@ namespace Demographics
 
             return thisstring;
         }
+
+
+        public static Patient addPatient()
+        {
+            Patient tempPatient = new Patient();
+            //! Get HCN before other info to prefill if patient already exists
+            Console.Clear();
+            Console.WriteLine("Please enter the Health Card number for the patient: ");
+            tempPatient.HCN = Console.ReadLine();
+
+            while (!tempPatient.Validate("HCN", tempPatient.HCN))
+            {
+                Console.Clear();
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine("Invalid HCN. Must be 10 digits followed by 2 letters");
+                tempPatient.HCN = Console.ReadLine();
+            }
+            //! Only prompt for info once a valid HCN has been entered
+            tempPatient = DemographicsUI.PromptForInfo(tempPatient.HCN);
+            DemographicsUI.AddPatient(tempPatient);
+
+            return tempPatient;
+        }
+
+        public static Patient[] addPatientWithCaregiver()
+        {
+
+            Patient[] patients = new Patient[]
+            {
+                new Patient(),
+                new Patient()
+            };
+            Patient tempPatient = new Patient();
+
+            Console.Clear();
+            Console.WriteLine("Please enter the Health Card number for the caregiver: ");
+            tempPatient.HCN = Console.ReadLine();
+
+            while (!tempPatient.Validate("HCN", tempPatient.HCN))
+            {
+                Console.Clear();
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine("Invalid HCN. Must be 10 digits followed by 2 letters");
+                tempPatient.HCN = Console.ReadLine();
+            }
+            patients[0] = DemographicsUI.PromptForInfo(tempPatient.HCN);
+
+            tempPatient = new Patient();
+
+            Console.Clear();
+            Console.WriteLine("Please enter the Health Card number for the patient: ");
+            tempPatient.HCN = Console.ReadLine();
+            while (!tempPatient.Validate("HCN", tempPatient.HCN))
+            {
+                Console.Clear();
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine("Invalid HCN. Must be 10 digits followed by 2 letters");
+                tempPatient.HCN = Console.ReadLine();
+            }
+            patients[1] = DemographicsUI.PromptForInfo(tempPatient.HCN, patients[0]);
+
+            DemographicsUI.AddPatient(patients[0]);
+            DemographicsUI.AddPatient(patients[1]);
+
+            return patients;
+        }
+
+
 
 
         /// <summary>
