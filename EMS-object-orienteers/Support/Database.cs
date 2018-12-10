@@ -186,7 +186,7 @@ namespace Support
                     throw dnfex;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
