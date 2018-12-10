@@ -14,17 +14,19 @@ namespace SchedulingUI
         public const int cHCN = 1;
         public const int cFirstName = 3;
         public const int cLastName = 4;
-        ///
-        /// \Called to display dayly user interface
-        /// \details <b>showDay</b>
-        ///
+  
+
+        /// <summary>
+        /// Display day to user.
+        /// </summary>
+        /// <remarks>
         ///  This method displays all appointment slots for each day. The user can use the
         ///  arrow keys to changed the highlighted day and press enter to select.
         ///  The user can switch between months.
-        /// 
-        /// \return  Returns void
-        ///
-        ///
+        /// </remarks>
+        /// <param name="selectedDay">day selected from month</param>
+        /// <param name="year">year to display</param>
+        /// <returns>void</returns>
         static public void showDay(int selectedDay, int year)
         {
             Console.Clear();
@@ -63,15 +65,19 @@ namespace SchedulingUI
             Menu.mainMenu();
         }
 
-        ///
-        /// \Called to select the slot for an appointment 
-        /// \details <b>selctAppointment</b>
-        /// 
+
+        /// <summary>
+        /// select the slot for an appointment.
+        /// </summary>
+        /// <remarks>
         ///  This method will allow the user to select which time slot the 
-        ///  patient wishes to book their appointment
-        /// 
-        /// \return void 
-        ///
+        ///  patient wishes to book their appointment. The option is to book
+        ///  an appointment or enter a billing code depending on whether there
+        ///  is an appointment booked in the slot or not.
+        /// </remarks>
+        /// <param name="day">day selected from month</param>
+        /// <param name="year">current year</param>
+        /// <returns>int selection: which slot is picked</returns>
         static public int selectAppointment(int day, int year)
         {
             int yPos = 4;
@@ -82,9 +88,9 @@ namespace SchedulingUI
 
             do
             {
-                getTimeSlot(xPos, yPos, selection, "red");
+                highlightSelection(xPos, yPos, selection, "red");
                 input = Console.ReadKey(true);
-                getTimeSlot(xPos, yPos, selection, "green");
+                highlightSelection(xPos, yPos, selection, "green");
                 if (input.Key == ConsoleKey.UpArrow && yPos > cDayTopMax)
                 {
                     yPos = yPos - cDayVert;
@@ -112,12 +118,12 @@ namespace SchedulingUI
             //instantiate the db
             Database db = new Database(Month.CurMonth+" Database");
             //Assign Parsingdb to the result of that record
-            parsingDatabase = db.GetRecord(parsingDatabase);
+            string record = db.GetRecord(parsingDatabase);
             //split this all
-            string[] values = parsingDatabase.Split('|');
-
-            if (values[cHCN] != "")
+            if (record != "")
             {
+                string[] values = record.Split('|');
+                Console.Clear();
                 Schedule.addBillingCode(day, year, values[cHCN]);
             }
             else
@@ -128,10 +134,22 @@ namespace SchedulingUI
             return selection;
         }
 
-        
-        static public int getTimeSlot(int xPos, int yPos, int selection, string colour)
-        {
 
+        /// <summary>
+        /// Highlight selected item.
+        /// </summary>
+        /// <remarks>
+        ///  The colour of a word where the cursor is placed will
+        ///  change colour as a way to clearly show to the user 
+        ///  clearly which option they will select.
+        /// </remarks>
+        /// <param name="xPos">X position of cursor</param>
+        /// <param name="yPos">Y position of cursor</param>
+        /// <param name="selection">what is being changed colours</param>
+        /// <param name="colour">colour to change to</param>
+        /// <returns>void</returns>
+        static public void highlightSelection(int xPos, int yPos, int selection, string colour)
+        {
             Console.SetCursorPosition(xPos, yPos);
             if (colour == "red")
             {
@@ -142,8 +160,6 @@ namespace SchedulingUI
                 Console.ForegroundColor = ConsoleColor.Green;
             }
             Console.WriteLine(Enum.GetName(typeof(timeSlot), selection));
-
-            return 0;
         }
     }  
 }

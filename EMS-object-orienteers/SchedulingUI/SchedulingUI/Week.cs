@@ -10,7 +10,7 @@ namespace SchedulingUI
     {
         enum DofW { Sunday, Monday, Tuesday, Wednesday, Thusday, Friday, Saturday };
 
-        public const int cWeekVert = 6;
+        public const int cWeekVert = 5;
         public const int cWeekHorz = 16;
         public const int cWeekTopMax = 2;
         public const int cWeekBotMax = 31;
@@ -25,6 +25,7 @@ namespace SchedulingUI
         /// \return  Returns void
         ///
         ///
+
         public static void showWeek()
         {
             Console.Clear();
@@ -41,7 +42,7 @@ namespace SchedulingUI
             {
                 foreach (DofW day in Enum.GetValues(typeof(DofW)))
                 {
-                    Console.SetCursorPosition(16 * i, (int)day * 6);
+                    Console.SetCursorPosition(cWeekHorz * i, (int)day * cWeekVert);
                     if (day == 0)
                     {
                         Console.Write("_____Week_"+ i +"_____");
@@ -50,17 +51,15 @@ namespace SchedulingUI
                     {
                         Console.Write("|_______________|");
                     }
-                    Console.SetCursorPosition(16 * i, (int)day * 6 + 1);
+                    Console.SetCursorPosition(cWeekHorz * i, (int)day * cWeekVert + 1);
                     Console.Write("|\t \t|");
-                    Console.SetCursorPosition(16 * i, (int)day * 6 + 2);
+                    Console.SetCursorPosition(cWeekHorz * i, (int)day * cWeekVert + 2);
                     Console.Write("|\t\t|");
-                    Console.SetCursorPosition(16 * i, (int)day * 6 + 3);
+                    Console.SetCursorPosition(cWeekHorz * i, (int)day * cWeekVert + 3);
                     Console.Write("|\t  \t|  " + day);
-                    Console.SetCursorPosition(16 * i, (int)day * 6 + 4);
-                    Console.Write("|\t \t|");
-                    Console.SetCursorPosition(16 * i, (int)day * 6 + 5);
+                    Console.SetCursorPosition(cWeekHorz * i, (int)day * cWeekVert + 4);
                     Console.Write("|\t\t|");
-                    Console.SetCursorPosition(16 * i, (int)day * 6 + 6);
+                    Console.SetCursorPosition(cWeekHorz * i, (int)day * cWeekVert + 5);
                     Console.Write("|_______________|\n");
 
                 }
@@ -70,29 +69,7 @@ namespace SchedulingUI
 
 
 
-        public void createDisplay(string output, int xPos, int yPos)
-        {
-            Console.SetCursorPosition(xPos, yPos);
-            Console.Write(output);
-        }
 
-
-
-
-
-
-
-
-
-        ///
-        /// \Called to select the slot for an appointment 
-        /// \details <b>selctAppointment</b>
-        /// 
-        ///  This method will allow the user to select which time slot the 
-        ///  patient wishes to book their appointment
-        /// 
-        /// \return void 
-        ///
         static public void selectAppointment()
         {
             int yPos = 1;
@@ -129,7 +106,7 @@ namespace SchedulingUI
                 }
                 else if (input.Key == ConsoleKey.D)
                 {
-                    Day.showDay(1);
+                    Day.showDay(1, 2018);
                 }
                 else if (input.Key == ConsoleKey.M)
                 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using billing;
 
 /// 
 /// \class Menu
@@ -19,7 +20,7 @@ namespace SchedulingUI
         public const int cTopMax = 4;
         public const int cBotMax = 20;
         public const int cLeftMax = 3;
-        public const int cRightMax = 40;
+        public const int cRightMax = 36;
 
         public static string[] cAllMonths = { "January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
@@ -114,10 +115,6 @@ namespace SchedulingUI
                     monthCount++;
                 }
             }
-
-
-
-
             selectMonth();
         }
 
@@ -155,19 +152,19 @@ namespace SchedulingUI
                     yPos = yPos + cVert;
                     selection += 3;
                 }
-                else if (input.Key == ConsoleKey.RightArrow && xPos > cRightMax)
+                else if (input.Key == ConsoleKey.RightArrow && xPos < cRightMax)
                 {
                     xPos = xPos + cHorz;
                     ++selection;
                 }
-                else if (input.Key == ConsoleKey.LeftArrow && xPos <= cLeftMax)
+                else if (input.Key == ConsoleKey.LeftArrow && xPos >= cLeftMax)
                 {
                     xPos = xPos - cHorz;
                     --selection;
                 }
                 else if (input.Key == ConsoleKey.D)
                 {
-                    Day.showDay(1);
+                    Day.showDay(1, 2018);
                 }
                 else if (input.Key == ConsoleKey.M)
                 {
@@ -177,9 +174,13 @@ namespace SchedulingUI
                 Console.SetCursorPosition(xPos, yPos);
             }
             while (input.Key != ConsoleKey.Enter);
-            Console.ReadLine();
-            //Billing.ViewReport(selection, 2018);
-            // .ViewReport(selection, 2018);
+            Console.Clear();
+            Billing.ViewReport(selection, 2018);
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            mainMenu();
+            
+
         }
 
         static public int getTimeSlot(int xPos, int yPos, int selection, string colour)
