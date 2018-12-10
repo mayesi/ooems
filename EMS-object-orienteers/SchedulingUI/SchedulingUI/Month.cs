@@ -206,17 +206,22 @@ namespace SchedulingUI
             return monthLength;
         }
 
-        ///
-        /// \Called to determine the date selected
-        /// \details <b>getDate</b>
-        /// \param int: xPos, yPos, offSet 
-        /// 
-        ///  This method will determine what date was selected on the monthly calender
+
+        /// <summary>
+        /// Detemine the selected item and highlight it.
+        /// </summary>
+        /// <remarks>
+        ///  Determine what date was selected on the monthly calender
         ///  based on the position of the cursor and the offset of the start date due 
-        ///  to months starting on different days
-        /// 
-        /// \return int: return the number selected
-        ///
+        ///  to months starting on different day The colour of a word where the cursor
+        ///  is placed will change colour as a way to clearly show to the user 
+        ///  clearly which option they will select.
+        /// </remarks>
+        /// <param name="xPos">X position of cursor</param>
+        /// <param name="yPos">Y position of cursor</param>
+        /// <param name="selection">what is being changed colours</param>
+        /// <param name="colour">colour to change to</param>
+        /// <returns>void</returns>
         public static int getDate(int xPos, int yPos, int offSet, string colour)
         {
             int yDate = yPos;

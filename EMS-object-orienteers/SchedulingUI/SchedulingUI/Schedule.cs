@@ -21,9 +21,16 @@ namespace SchedulingUI
         public const int cMonthRightMax = 40;
         public const int cMonthTopMax = 4;
         public const int cMonthBotMax = 10;
-        public static int HCH = 1;
+        public static int HCH = 1; //
+
+
+        public const int cHCN = 1;
+        public const int cMonth = 2;
+        public const int cFirstName = 3;
+        public const int cLastName = 4;
         Dictionary<int, object> scheduleInfo = new Dictionary<int, object>();
         Database db = new Database("October Database");
+
 
 
         enum scale {days = 1, week, month};
@@ -51,7 +58,33 @@ namespace SchedulingUI
                 Database.CreateNewDatabase("November Database", 10000, "Health Card Number");
                 Database.CreateNewDatabase("December Database", 10000, "Health Card Number");
             }
-            
+            try
+            {
+                Database.CreateNewDatabase("October Database", 10000, "Health Card Number");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("October Database was already crated");
+            }
+            try
+            {
+                Database.CreateNewDatabase("November Database", 10000, "Health Card Number");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("November Database was already crated");
+            }
+            try
+            {
+                Database.CreateNewDatabase("December Database", 10000, "Health Card Number");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("December Database was already crated");
+            }
+            Console.ReadKey();
+
+
         }
 
 
@@ -110,32 +143,6 @@ namespace SchedulingUI
 
 
         ///
-        /// \Called to switch views of the schedule
-        /// \details <b>period</b>
-        ///
-        ///  This method will get input from the user to select whether they wish
-        ///  to view the schedule by day, week or month
-        /// 
-        /// \return  Returns void
-        ///
-        public static void SearchSchedule(string searchType)
-        {
-            if (searchType == "HCN")
-            {
-                Console.Write("Enter the Health Card Number to search for: ");
-            }
-            else if (searchType == "name")
-            {
-                Console.Write("Enter the last name to search for: ");
-            }
-            Console.ReadLine();
-            
-
-        }
-
-
-
-        ///
         /// \Called to search for a patient by HCN
         /// \details <b>patientSearch</b>
         /// \param  string: sHCN - Health Card Number
@@ -145,13 +152,43 @@ namespace SchedulingUI
         /// 
         /// \return void 
         ///
-        public void patientSearch(string sHCN)
+        public static void SearchSchedule(string searchType)
         {
-            Database db = new Database(Month.CurMonth + " Database");
-            db.GetRecord("140");
+            Database dbOct = new Database("October Database");
+            Database dbNov = new Database("November Database");
+            Database dbDec = new Database("December Database");
+            Console.Write("Enter the Health Card Number to search for: ");
 
+
+            string search = Console.ReadLine();
+            string recordFound = dbOct.GetRecord(search, 1);
+            if (recordFound == "")
+            {
+                recordFound = dbNov.GetRecord(search, 1);
+                if (recordFound == "")
+                {
+                    recordFound = dbDec.GetRecord(search, 1);
+                }
+            }
+            string day;
+
+            string[] result = recordFound.Split('|');
+            string time = result[0];
+            if (time.Length == 3)
+            {
+                day = time.Substring(0,2);
+                time = time.Substring(2);
+            }
+            else
+            {
+                day = time.Substring(0, 1);
+                time = time.Substring(1);
+            }
+ 
+            Console.WriteLine("(" + result[cHCN] + ") " + result[cFirstName] +" " + result[cLastName] + "'S appointment was found on " + result[cMonth] + " " + day);
 
         }
+
 
 
         ///
@@ -271,10 +308,10 @@ namespace SchedulingUI
             // Now get the code from the user.
             string code = "";
             Console.WriteLine("Enter the Billing Code: ");
-            code += Console.ReadKey().ToString();
-            code += Console.ReadKey().ToString();
-            code += Console.ReadKey().ToString();
-            code += Console.ReadKey().ToString();
+            code += Console.ReadKey().KeyChar;
+            code += Console.ReadKey().KeyChar;
+            code += Console.ReadKey().KeyChar;
+            code += Console.ReadKey().KeyChar;
             Console.WriteLine("\n");
 
             try
