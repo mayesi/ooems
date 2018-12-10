@@ -1,18 +1,20 @@
-﻿using System;
+﻿// FILE 			: Schedule.cs
+// PROJECT          : INFO2180 EMS Solution
+// PROGRAMMER 		: Sean O'Brien, Object Orienteers
+// FIRST VERSION 	: December 9th 2018
+// DESCRIPTION 	    : Contains the logic for the scheduling of appointements
+using System;
 using System.Collections.Generic;
 using Support;
 using billing;
-/// 
-/// \class Schedule
-///
-/// \brief The purpose of this class is to model a schedule that can store appointmants.
-///
-/// This flies contains the class methods used in Schedule.cs.
-///
-/// \author A <i>Sean O'Brien</i>
-///
+
 namespace SchedulingUI
 {
+    /// <summary>
+    /// This class represents the maintenance of the scheduling databases, 
+    /// along with the maintaining and the appointing of appointments
+    /// Allows the user to add billing codes. No bugs are known as of yet. 
+    /// </summary>
     public class Schedule 
     {
         public const int cMonthvert = 2;
@@ -82,9 +84,6 @@ namespace SchedulingUI
             {
                 Console.WriteLine("December Database was already crated");
             }
-            Console.ReadKey();
-
-
         }
 
 
